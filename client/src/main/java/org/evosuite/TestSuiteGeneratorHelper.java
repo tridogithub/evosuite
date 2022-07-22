@@ -264,6 +264,8 @@ public class TestSuiteGeneratorHelper {
                 return new NoveltyStrategy();
             case MAP_ELITES:
                 return new MAPElitesStrategy();
+            case TLBO:
+                return new TLBOTestSuiteStrategy();
             default:
                 throw new RuntimeException("Unsupported strategy: " + Properties.STRATEGY);
         }

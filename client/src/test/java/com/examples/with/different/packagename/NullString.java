@@ -21,8 +21,18 @@ package com.examples.with.different.packagename;
 
 public class NullString {
 
-    public boolean isNull(String s) {
+    public boolean isBlank(String s) {
         if (s == null) {
+            return true;
+        } else {
+            boolean isEmpty = isEmpty("");
+            return isEmpty;
+//            return false;
+        }
+    }
+
+    private boolean isEmpty(String s) {
+        if(s.isEmpty()) {
             return true;
         } else {
             return false;

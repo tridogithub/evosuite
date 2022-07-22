@@ -19,16 +19,23 @@
  */
 package org.evosuite.basic;
 
+import com.examples.with.different.packagename.Example;
+import com.examples.with.different.packagename.NextDate;
 import org.evosuite.EvoSuite;
 import org.evosuite.Properties;
 import org.evosuite.SystemTestBase;
+import org.evosuite.coverage.branch.BranchCoverageSuiteFitness;
+import org.evosuite.coverage.branch.BranchCoverageTestFitness;
 import org.evosuite.ga.metaheuristics.GeneticAlgorithm;
 import org.evosuite.strategy.TestGenerationStrategy;
+import org.evosuite.testcase.TestFitnessFunction;
 import org.evosuite.testsuite.TestSuiteChromosome;
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.examples.with.different.packagename.NullString;
+
+import java.util.List;
 
 public class NullStringSystemTest extends SystemTestBase {
 
@@ -36,19 +43,27 @@ public class NullStringSystemTest extends SystemTestBase {
     public void testNullString() {
         EvoSuite evosuite = new EvoSuite();
 
-        String targetClass = NullString.class.getCanonicalName();
+        String targetClass = NextDate.class.getCanonicalName();
+        System.out.println(targetClass);
+//        String targetClass = Example.class.getCanonicalName();
 
         Properties.TARGET_CLASS = targetClass;
+        Properties.STRATEGY = Properties.Strategy.TLBO;
+        String[] command = new String[]{"-generateSuite", "-class", targetClass, "-Dstrategy="+Properties.Strategy.TLBO.name()};
+//        Properties.ALGORITHM = Properties.Algorithm.MONOTONIC_GA;
+//        String[] command = new String[]{"-generateSuite", "-class", targetClass};
+//        Properties.NULL_PROBABILITY = 1;
 
-        String[] command = new String[]{"-generateSuite", "-class", targetClass};
 
         Object result = evosuite.parseCommandLine(command);
-        GeneticAlgorithm<?> ga = getGAFromResult(result);
-        TestSuiteChromosome best = (TestSuiteChromosome) ga.getBestIndividual();
-        System.out.println("EvolvedTestSuite:\n" + best);
+//        GeneticAlgorithm<?> ga = getGAFromResult(result);
+//        TestSuiteChromosome best = (TestSuiteChromosome) ga.getBestIndividual();
+//        System.out.println("EvolvedTestSuite:\n" + best);
 
-        int goals = TestGenerationStrategy.getFitnessFactories().get(0).getCoverageGoals().size(); // assuming single fitness function
-        Assert.assertEquals("Wrong number of goals: ", 3, goals);
-        Assert.assertEquals("Non-optimal coverage: ", 1d, best.getCoverage(), 0.001);
+        List<BranchCoverageTestFitness> coverageGoals = (List<BranchCoverageTestFitness>) TestGenerationStrategy.getFitnessFactories().get(0).getCoverageGoals();
+        int goals = coverageGoals.size(); // assuming single fitness function
+        coverageGoals.forEach(System.out::println);
+//        Assert.assertEquals("Wrong number of goals: ", 3, goals);
+//        Assert.assertEquals("Non-optimal coverage: ", 1d, best.getCoverage(), 0.001);
     }
 }
