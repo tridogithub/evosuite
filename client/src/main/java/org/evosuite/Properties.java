@@ -1649,6 +1649,8 @@ public class Properties {
     @Parameter(key = "honour_data_annotations", group = "Runtime", description = "Allows EvoSuite to generate tests with or without honouring the parameter data annotations")
     public static boolean HONOUR_DATA_ANNOTATIONS = true;
 
+    //-----------------------------------------------------------------
+    //TLBO algorithm
     /**
      * Get all parameters that are available
      *
@@ -1657,6 +1659,9 @@ public class Properties {
     public static Set<String> getParameters() {
         return parameterMap.keySet();
     }
+    @Parameter(key = "iteration", group = "Search Algorithm", description = "Iteration size of TLBO algorithm")
+    @IntValue(min = 10)
+    public static int ITERATION = 50;
 
     /**
      * Determine fields that are declared as parameters

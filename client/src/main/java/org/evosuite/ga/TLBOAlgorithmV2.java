@@ -62,7 +62,7 @@ public class TLBOAlgorithmV2<T extends Chromosome<T>> implements SearchAlgorithm
         testChromosome.getTestCase().getCoveredGoals().size();
 //        System.out.println(testChromosome.getFitness());
 //        System.out.println(testChromosome);
-        while (currentIteration <= 10) {
+        while (currentIteration <= Properties.ITERATION) {
             System.out.println("Iteration: " + currentIteration);
             //TODO add mutation for each phase
             //teaching phase
@@ -138,9 +138,10 @@ public class TLBOAlgorithmV2<T extends Chromosome<T>> implements SearchAlgorithm
             int different = currentTestChromosomes.size() - betterTestChromosomes.size();
             // replace a portion of student by a number of best chromosomes of teacher
             if (different != 0) {
-                List<TestChromosome> bestTestChromosomes = getBestTestChromosomeFromTestSuite(betterTestSuiteChromosome, different);
+                int numberOfBestTestCase = Math.min(different, betterChromosome.size());
+                List<TestChromosome> bestTestChromosomes = getBestTestChromosomeFromTestSuite(betterTestSuiteChromosome, numberOfBestTestCase);
                 currentTestChromosomes.sort((o1, o2) -> o2.getTestCase().getCoveredGoals().size() - o1.getTestCase().getCoveredGoals().size());
-                for (int i = currentTestChromosomes.size() - different - 1; i < currentTestChromosomes.size(); i++) {
+                for (int i = currentTestChromosomes.size() - numberOfBestTestCase - 1; i < currentTestChromosomes.size(); i++) {
                     currentTestChromosomes.remove(i);
                 }
 //                System.out.println("Size after remove: " + currentTestChromosomes.size());
