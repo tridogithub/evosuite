@@ -119,6 +119,9 @@ public class RandomInsertion implements InsertionStrategy {
                             + var.getName() + ", distance: " + var.getDistance() + ", class: "
                             + var.getClassName());
                 }
+//                System.out.println("Inserting call at position " + position + ", chosen var: "
+//                        + var.getName() + ", distance: " + var.getDistance() + ", class: "
+//                        + var.getClassName());
 
                 success = TestFactory.getInstance().insertRandomCallOnObjectAt(test, var, position);
             }

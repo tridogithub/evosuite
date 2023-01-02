@@ -114,6 +114,18 @@ public class IntPrimitiveStatement extends NumericalPrimitiveStatement<Integer> 
         }
     }
 
+    public void randomizeMonth() {
+        value = Randomness.nextInt(14);
+    }
+
+    public void randomizeDay() {
+        value = Randomness.nextInt(33);
+    }
+
+    public void randomizeYear() {
+        value = Randomness.nextInt(402);
+    }
+
     /* (non-Javadoc)
      * @see org.evosuite.testcase.PrimitiveStatement#increment()
      */
