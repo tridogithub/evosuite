@@ -310,7 +310,7 @@ public class TestFactory {
                         Arrays.asList(constructor.getConstructor().getParameters()),
                         position,
                         recursionDepth + 1,
-                        true, false, true, klass);
+                        true, false, true, klass, "constructor");
             } else {
                 parameters = satisfyParameters(test,
                         null,
@@ -531,11 +531,19 @@ public class TestFactory {
             }
 
             // Added 'null' as additional parameter - fix for @NotNull annotations issue on evo mailing list
-            parameters = satisfyParameters(test, callee,
-                    Arrays.asList(method.getParameterTypes()),
-                    Arrays.asList(method.getMethod().getParameters()),
-                    position, recursionDepth + 1, true, false, true);
-
+            if (method.getOwnerClass().getSimpleName().equalsIgnoreCase("NextDate")) {
+                parameters = satisfyNextDateParameters(
+                        test, callee,
+                        Arrays.asList(method.getParameterTypes()),
+                        Arrays.asList(method.getMethod().getParameters()), position, recursionDepth + 1, true,
+                        false, true,
+                        null, method.getName());
+            } else {
+                parameters = satisfyParameters(test, callee,
+                        Arrays.asList(method.getParameterTypes()),
+                        Arrays.asList(method.getMethod().getParameters()),
+                        position, recursionDepth + 1, true, false, true);
+            }
         } catch (ConstructionFailedException e) {
             // TODO: Re-insert in new test cluster
             // TestCluster.getInstance().checkDependencies(method);
@@ -584,11 +592,21 @@ public class TestFactory {
         boolean allowNull = true;
 
         // Added 'null' as additional parameter - fix for @NotNull annotations issue on evo mailing list
-        List<VariableReference> parameters = satisfyParameters(
-                test, callee,
-                Arrays.asList(method.getParameterTypes()),
-                Arrays.asList(method.getMethod().getParameters()), position, 1, allowNull, false, true);
-
+        List<VariableReference> parameters;
+        if (method.getOwnerClass().getSimpleName().equalsIgnoreCase("NextDate")) {
+            Class klass = method.getMethod().getDeclaringClass();
+            parameters = satisfyNextDateParameters(
+                    test, callee,
+                    Arrays.asList(method.getParameterTypes()),
+                    Arrays.asList(method.getMethod().getParameters()), position, 1, allowNull,
+                    false, true,
+                    klass, method.getName());
+        } else {
+            parameters = satisfyParameters(
+                    test, callee,
+                    Arrays.asList(method.getParameterTypes()),
+                    Arrays.asList(method.getMethod().getParameters()), position, 1, allowNull, false, true);
+        }
         int newLength = test.size();
         position += (newLength - length);
 
@@ -740,7 +758,7 @@ public class TestFactory {
      */
     public VariableReference attemptGeneration(TestCase test, Type type, int position)
             throws ConstructionFailedException {
-        return attemptGeneration(test, type, position, 0, false, null, true, true, null, null);
+        return attemptGeneration(test, type, position, 0, false, null, true, true, null, null, null);
     }
 
 
@@ -758,7 +776,7 @@ public class TestFactory {
     protected VariableReference attemptGeneration(TestCase test, Type type, int position,
                                                   int recursionDepth, boolean allowNull, VariableReference generatorRefToExclude,
                                                   boolean canUseMocks, boolean canReuseExistingVariables,
-                                                  Parameter parameter, Class klass)
+                                                  Parameter parameter, Class klass, String methodName)
             throws ConstructionFailedException {
 
         GenericClass<?> clazz = GenericClassFactory.get(type);
@@ -772,7 +790,7 @@ public class TestFactory {
         } else if (clazz.isPrimitive() || clazz.isClass()
                 || EnvironmentStatements.isEnvironmentData(clazz.getRawClass())) {
             if (klass != null && "NextDate".equalsIgnoreCase(klass.getSimpleName())) {
-                return createPrimitiveNextDate(test, clazz, position, recursionDepth, parameter);
+                return createPrimitiveNextDate(test, clazz, position, recursionDepth, parameter, methodName);
             } else {
                 return createPrimitive(test, clazz, position, recursionDepth);
             }
@@ -1175,7 +1193,7 @@ public class TestFactory {
     }
 
     private VariableReference createPrimitiveNextDate(TestCase test, GenericClass<?> clazz,
-                                                      int position, int recursionDepth, Parameter parameter)
+                                                      int position, int recursionDepth, Parameter parameter, String methodName)
             throws ConstructionFailedException {
         // Special case: we cannot instantiate Class<Class<?>>
         if (clazz.isClass()) {
@@ -1195,11 +1213,17 @@ public class TestFactory {
         if (st instanceof IntPrimitiveStatement && parameter != null) {
             IntPrimitiveStatement intPrimitiveStatement = (IntPrimitiveStatement) st;
 
-            if (parameter.getName().equalsIgnoreCase("arg0")) {
+            if ((parameter.getName().equalsIgnoreCase("arg0") && "constructor".equalsIgnoreCase(methodName))
+                    || "setMonth".equalsIgnoreCase(methodName)
+            ) {
                 intPrimitiveStatement.randomizeMonth();
-            } else if (parameter.getName().equalsIgnoreCase("arg1")) {
+            } else if ((parameter.getName().equalsIgnoreCase("arg1") && "constructor".equalsIgnoreCase(methodName))
+                    || "setDay".equalsIgnoreCase(methodName)
+            ) {
                 intPrimitiveStatement.randomizeDay();
-            } else if (parameter.getName().equalsIgnoreCase("arg2")) {
+            } else if ((parameter.getName().equalsIgnoreCase("arg2") && "constructor".equalsIgnoreCase(methodName))
+                    || "setYear".equalsIgnoreCase(methodName)
+            ) {
                 intPrimitiveStatement.randomizeYear();
             }
             VariableReference ret = test.addStatement(intPrimitiveStatement, position);
@@ -1572,7 +1596,7 @@ public class TestFactory {
             }
             VariableReference reference = attemptGeneration(test, parameterType,
                     position, recursionDepth,
-                    allowNull, generatorRefToExclude, canUseMocks, canReuseExistingVariables, null, null);
+                    allowNull, generatorRefToExclude, canUseMocks, canReuseExistingVariables, null, null, null);
 
             assert !(!allowNull && ConstraintHelper.isNull(reference, test));
             assert canUseMocks || !(test.getStatement(reference.getStPosition()) instanceof FunctionalMockStatement);
@@ -2523,7 +2547,7 @@ public class TestFactory {
 
     private VariableReference createOrReuseVariable(TestCase test, Type parameterType,
                                                     int position, int recursionDepth, VariableReference exclude, boolean allowNull,
-                                                    boolean excludeCalleeGenerators, boolean canUseMocks, Parameter parameter, Class klass)
+                                                    boolean excludeCalleeGenerators, boolean canUseMocks, Parameter parameter, Class klass, String methodName)
             throws ConstructionFailedException {
         if (Properties.SEED_TYPES && parameterType.equals(Object.class)) {
             return createOrReuseObjectVariable(test, position, recursionDepth, exclude, allowNull, canUseMocks);
@@ -2554,7 +2578,7 @@ public class TestFactory {
         //if chosen to not re-use existing variable, try create a new one
         VariableReference created = createVariable(test, parameterType,
                 position, recursionDepth, exclude, allowNull,
-                excludeCalleeGenerators, canUseMocks, true, parameter, klass);
+                excludeCalleeGenerators, canUseMocks, true, parameter, klass, methodName);
         if (created != null) {
             return created;
         }
@@ -2580,7 +2604,7 @@ public class TestFactory {
     private VariableReference createVariable(TestCase test, Type parameterType,
                                              int position, int recursionDepth, VariableReference exclude, boolean allowNull,
                                              boolean excludeCalleeGenerators, boolean canUseMocks, boolean canReuseExistingVariables,
-                                             Parameter parameter, Class klass)
+                                             Parameter parameter, Class klass, String methodName)
             throws ConstructionFailedException {
 
         GenericClass<?> clazz = GenericClassFactory.get(parameterType);
@@ -2609,7 +2633,7 @@ public class TestFactory {
             }
             VariableReference reference = attemptGeneration(test, parameterType,
                     position, recursionDepth,
-                    allowNull, generatorRefToExclude, canUseMocks, canReuseExistingVariables, parameter, klass);
+                    allowNull, generatorRefToExclude, canUseMocks, canReuseExistingVariables, parameter, klass, methodName);
 
             assert !(!allowNull && ConstraintHelper.isNull(reference, test));
             assert canUseMocks || !(test.getStatement(reference.getStPosition()) instanceof FunctionalMockStatement);
@@ -2622,7 +2646,7 @@ public class TestFactory {
 
     public List<VariableReference> satisfyNextDateParameters(TestCase test, VariableReference callee, List<Type> parameterTypes,
                                                              List<Parameter> parameterList, int position, int recursionDepth, boolean allowNull,
-                                                             boolean excludeCalleeGenerators, boolean canReuseExistingVariables, Class<?> klass) throws ConstructionFailedException {
+                                                             boolean excludeCalleeGenerators, boolean canReuseExistingVariables, Class<?> klass, String methodName) throws ConstructionFailedException {
 
         if (callee == null && excludeCalleeGenerators) {
             throw new IllegalArgumentException("Exclude generators on null callee");
@@ -2661,19 +2685,19 @@ public class TestFactory {
                 }
             }
 
-            if (canReuseExistingVariables) {
-                logger.debug("Can re-use variables");
-                var = createOrReuseVariable(test, parameterType, position, recursionDepth, callee, allowNullForParameter,
-                        excludeCalleeGenerators, true, parameter, klass);
-            } else {
-                logger.debug("Cannot re-use variables: attempt at creating new one");
-                var = createVariable(test, parameterType, position, recursionDepth, callee, allowNullForParameter,
-                        excludeCalleeGenerators, true, false, parameter, klass);
-                if (var == null) {
-                    throw new ConstructionFailedException(
-                            "Failed to create variable for type " + parameterType + " at position " + position);
-                }
+//            if (canReuseExistingVariables) {
+//                logger.debug("Can re-use variables");
+//                var = createOrReuseVariable(test, parameterType, position, recursionDepth, callee, allowNullForParameter,
+//                        excludeCalleeGenerators, true, parameter, klass, methodName);
+//            } else {
+            logger.debug("Cannot re-use variables: attempt at creating new one");
+            var = createVariable(test, parameterType, position, recursionDepth, callee, allowNullForParameter,
+                    excludeCalleeGenerators, true, false, parameter, klass, methodName);
+            if (var == null) {
+                throw new ConstructionFailedException(
+                        "Failed to create variable for type " + parameterType + " at position " + position);
             }
+//            }
 
             assert !(!allowNullForParameter && ConstraintHelper.isNull(var, test));
 
