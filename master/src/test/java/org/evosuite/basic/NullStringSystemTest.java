@@ -19,9 +19,13 @@
  */
 package org.evosuite.basic;
 
+import com.examples.with.different.packagename.DayOfWeek;
 import com.examples.with.different.packagename.Example;
 import com.examples.with.different.packagename.NextDate;
+import com.examples.with.different.packagename.NextDateOriginal;
 import com.examples.with.different.packagename.Triangle;
+import com.examples.with.different.packagename.ValidDate;
+import org.apache.commons.collections.list.NodeCachingLinkedList;
 import org.evosuite.EvoSuite;
 import org.evosuite.Properties;
 import org.evosuite.SystemTestBase;
@@ -36,7 +40,10 @@ import org.junit.Test;
 
 import com.examples.with.different.packagename.NullString;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class NullStringSystemTest extends SystemTestBase {
 
@@ -44,7 +51,12 @@ public class NullStringSystemTest extends SystemTestBase {
     public void testNullString() {
         EvoSuite evosuite = new EvoSuite();
 
-        String targetClass = NextDate.class.getCanonicalName();
+//        String targetClass = NextDate.class.getCanonicalName();
+        String targetClass = DayOfWeek.class.getCanonicalName();
+//        String targetClass = ValidDate.class.getCanonicalName();
+//        String targetClass = Example.class.getCanonicalName();
+//        String targetClass = TreeSet.class.getCanonicalName();
+//        String targetClass = NextDateOriginal.class.getCanonicalName();
 //        String targetClass = NullString.class.getCanonicalName();
 //        String targetClass = Triangle.class.getCanonicalName();
         System.out.println(targetClass);
@@ -70,5 +82,14 @@ public class NullStringSystemTest extends SystemTestBase {
 //        Assert.assertEquals("Wrong number of goals: ", 3, goals);
 //        Assert.assertEquals("Non-optimal coverage: ", 1d, best.getCoverage(), 0.001);
         Assert.assertTrue(true);
+
+//        TreeMap
+//        TreeSet
+//        NodeCachingLinkedList
+
+//        NextDate -> reduce
+//        ValidDate
+//        DayOfWeek
+
     }
 }

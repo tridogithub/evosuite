@@ -4,35 +4,58 @@ package com.examples.with.different.packagename;
  */
 
 
-public class Example
-{
+import java.text.DateFormat;
 
-    public Example()
-    {
+public class Example {
+
+    public Example() {
         super();
     }
 
-    public String checkTriangle( Triangle1 t )
-    {
-        int side1 = t.side1;
-        int side2 = t.side2;
-        int side3 = t.side3;
-        String type = "";
-        if (side1 + side2 > side3 && side3 + side2 > side1 && side1 + side3 > side2) {
-            if (side1 != side2 && side1 != side3 && side2 != side3) {
-                type = "Is triangle scalene";
-            } else {
-                if ((side1 == side2 && side1 != side3) || (side1 == side3 && side1 != side2) || (side2 == side3 && side2 != side1)) {
-                    type = "Is triangle isosceles ";
-                } else {
-                    type = "Is triangle equilateral ";
-                }
-            }
-        } else {
-            type = "Not a triangle";
-        }
-        return type;
-    }
+//    public String checkTriangle( Triangle1 t )
+//    {
+//        int side1 = t.side1;
+//        int side2 = t.side2;
+//        int side3 = t.side3;
+//        String type = "";
+//        if (side1 + side2 > side3 && side3 + side2 > side1 && side1 + side3 > side2) {
+//            if (side1 != side2 && side1 != side3 && side2 != side3) {
+//                type = "Is triangle scalene";
+//            } else {
+//                if ((side1 == side2 && side1 != side3) || (side1 == side3 && side1 != side2) || (side2 == side3 && side2 != side1)) {
+//                    type = "Is triangle isosceles ";
+//                } else {
+//                    type = "Is triangle equilateral ";
+//                }
+//            }
+//        } else {
+//            type = "Not a triangle";
+//        }
+//        return type;
+//    }
 
+//    public static int daysIntMonth(int m, int y) {
+//        if (m < 0 || m > 12) {
+//            throw new IllegalArgumentException("Exception");
+//        }
+//        if (m == 2) {
+//            if (y % 400 == 0 || (y % 4 == 0 && y % 100 != 0)) {
+//                return 29;
+//            } else {
+//                return 28;
+//            }
+//        }
+//        if (m < 7) {
+//            if (m % 2 == 1) {
+//                return 31;
+//            } else {
+//                return 30;
+//            }
+//        }
+//        if (m % 2 == 0) {
+//            return 31;
+//        }
+//        return 30;
+//    }
 
 }
