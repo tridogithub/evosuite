@@ -303,7 +303,9 @@ public class TestFactory {
         try {
             //first be sure if parameters can be satisfied
             List<VariableReference> parameters;
-            if (klass.getSimpleName().equalsIgnoreCase("NextDate")) {
+            if (
+                    klass.getSimpleName().equalsIgnoreCase("NextDate")
+            ) {
                 parameters = satisfyNextDateParameters(test,
                         null,
                         Arrays.asList(constructor.getParameterTypes()),
@@ -531,7 +533,10 @@ public class TestFactory {
             }
 
             // Added 'null' as additional parameter - fix for @NotNull annotations issue on evo mailing list
-            if (method.getOwnerClass().getSimpleName().equalsIgnoreCase("NextDate")) {
+            if (
+                    method.getOwnerClass().getSimpleName().equalsIgnoreCase("NextDate")
+                            || method.getOwnerClass().getSimpleName().equalsIgnoreCase("ValidDate")
+            ) {
                 parameters = satisfyNextDateParameters(
                         test, callee,
                         Arrays.asList(method.getParameterTypes()),
@@ -593,7 +598,10 @@ public class TestFactory {
 
         // Added 'null' as additional parameter - fix for @NotNull annotations issue on evo mailing list
         List<VariableReference> parameters;
-        if (method.getOwnerClass().getSimpleName().equalsIgnoreCase("NextDate")) {
+        if (
+                method.getOwnerClass().getSimpleName().equalsIgnoreCase("NextDate")
+                || method.getOwnerClass().getSimpleName().equalsIgnoreCase("ValidDate")
+        ) {
             Class klass = method.getMethod().getDeclaringClass();
             parameters = satisfyNextDateParameters(
                     test, callee,
@@ -789,7 +797,12 @@ public class TestFactory {
 
         } else if (clazz.isPrimitive() || clazz.isClass()
                 || EnvironmentStatements.isEnvironmentData(clazz.getRawClass())) {
-            if (klass != null && "NextDate".equalsIgnoreCase(klass.getSimpleName())) {
+            if (klass != null &&
+                    (
+                            "NextDate".equalsIgnoreCase(klass.getSimpleName())
+                    || "ValidDate".equalsIgnoreCase(klass.getSimpleName())
+                    )
+            ){
                 return createPrimitiveNextDate(test, clazz, position, recursionDepth, parameter, methodName);
             } else {
                 return createPrimitive(test, clazz, position, recursionDepth);
@@ -1213,18 +1226,18 @@ public class TestFactory {
         if (st instanceof IntPrimitiveStatement && parameter != null) {
             IntPrimitiveStatement intPrimitiveStatement = (IntPrimitiveStatement) st;
 
-            if ((parameter.getName().equalsIgnoreCase("arg0") && "constructor".equalsIgnoreCase(methodName))
+            if ((parameter.getName().equalsIgnoreCase("arg0") && ("constructor".equalsIgnoreCase(methodName) || "isValidDate".equalsIgnoreCase(methodName)))
                     || "setMonth".equalsIgnoreCase(methodName)
             ) {
                 intPrimitiveStatement.randomizeMonth();
-            } else if ((parameter.getName().equalsIgnoreCase("arg1") && "constructor".equalsIgnoreCase(methodName))
+            } else if ((parameter.getName().equalsIgnoreCase("arg1") && ("constructor".equalsIgnoreCase(methodName) || "isValidDate".equalsIgnoreCase(methodName)))
                     || "setDay".equalsIgnoreCase(methodName)
             ) {
                 intPrimitiveStatement.randomizeDay();
-            } else if ((parameter.getName().equalsIgnoreCase("arg2") && "constructor".equalsIgnoreCase(methodName))
+            } else if ((parameter.getName().equalsIgnoreCase("arg2") && ("constructor".equalsIgnoreCase(methodName) || "isValidDate".equalsIgnoreCase(methodName)))
                     || "setYear".equalsIgnoreCase(methodName)
             ) {
-                intPrimitiveStatement.randomizeYear();
+                intPrimitiveStatement.randomizeYear(methodName);
             }
             VariableReference ret = test.addStatement(intPrimitiveStatement, position);
             ret.setDistance(recursionDepth);

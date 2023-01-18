@@ -1,4 +1,4 @@
-package com.examples.with.different.packagename;
+package org;
 
 /**
  * @author tridv on 17/1/2023
@@ -6,7 +6,7 @@ package com.examples.with.different.packagename;
  */
 public class ValidDate {
     private static int MAX_VALID_YR = 9999;
-    private static int MIN_VALID_YR = 0;
+    private static int MIN_VALID_YR = 1800;
 
     // Returns true if
     // given year is valid.
@@ -22,10 +22,9 @@ public class ValidDate {
 
     // Returns true if given
     // year is valid or not.
-    public boolean isValidDate(
-            int m,
-            int d,
-            int y) {
+    public boolean isValidDate(int d,
+                               int m,
+                               int y) {
         // If year, month and day
         // are not in given range
         if (y > MAX_VALID_YR ||
