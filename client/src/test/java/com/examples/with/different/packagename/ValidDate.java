@@ -5,8 +5,8 @@ package com.examples.with.different.packagename;
  * @project evosuite
  */
 public class ValidDate {
-    static int MAX_VALID_YR = 9999;
-    static int MIN_VALID_YR = 1800;
+    private static int MAX_VALID_YR = 9999;
+    private static int MIN_VALID_YR = 0;
 
     // Returns true if
     // given year is valid.
@@ -22,9 +22,10 @@ public class ValidDate {
 
     // Returns true if given
     // year is valid or not.
-    public boolean isValidDate(int d,
-                               int m,
-                               int y) {
+    public boolean isValidDatee(
+            int m,
+            int d,
+            int y) {
         // If year, month and day
         // are not in given range
         if (y > MAX_VALID_YR ||
@@ -54,17 +55,4 @@ public class ValidDate {
 
         return true;
     }
-
-    // Driver code
-//    public static void main(String args[]) {
-//        if (isValidDate(10, 12, 2000))
-//            System.out.println("Yes");
-//        else
-//            System.out.println("No");
-//
-//        if (isValidDate(31, 11, 2000))
-//            System.out.println("Yes");
-//        else
-//            System.out.println("No");
-//    }
 }

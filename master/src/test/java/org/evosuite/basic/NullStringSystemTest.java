@@ -31,6 +31,7 @@ import org.evosuite.Properties;
 import org.evosuite.SystemTestBase;
 import org.evosuite.coverage.branch.BranchCoverageSuiteFitness;
 import org.evosuite.coverage.branch.BranchCoverageTestFitness;
+import org.evosuite.ga.FitnessFunction;
 import org.evosuite.ga.metaheuristics.GeneticAlgorithm;
 import org.evosuite.strategy.TestGenerationStrategy;
 import org.evosuite.testcase.TestFitnessFunction;
@@ -41,6 +42,7 @@ import org.junit.Test;
 import com.examples.with.different.packagename.NullString;
 
 import java.text.SimpleDateFormat;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -51,8 +53,8 @@ public class NullStringSystemTest extends SystemTestBase {
     public void testNullString() {
         EvoSuite evosuite = new EvoSuite();
 
-//        String targetClass = NextDate.class.getCanonicalName();
-        String targetClass = DayOfWeek.class.getCanonicalName();
+        String targetClass = NextDate.class.getCanonicalName();
+//        String targetClass = DayOfWeek.class.getCanonicalName();
 //        String targetClass = ValidDate.class.getCanonicalName();
 //        String targetClass = Example.class.getCanonicalName();
 //        String targetClass = TreeSet.class.getCanonicalName();
@@ -74,11 +76,12 @@ public class NullStringSystemTest extends SystemTestBase {
         Object result = evosuite.parseCommandLine(command);
         GeneticAlgorithm<?> ga = getGAFromResult(result);
         TestSuiteChromosome best = (TestSuiteChromosome) ga.getBestIndividual();
+        LinkedHashMap<FitnessFunction<TestSuiteChromosome>, Integer> uncoveredGoals = best.getNumsNotCoveredGoals();
         System.out.println("EvolvedTestSuite:\n" + best);
 
         List<BranchCoverageTestFitness> coverageGoals = (List<BranchCoverageTestFitness>) TestGenerationStrategy.getFitnessFactories().get(0).getCoverageGoals();
         int goals = coverageGoals.size(); // assuming single fitness function
-        coverageGoals.forEach(System.out::println);
+//        coverageGoals.forEach(System.out::println);
 //        Assert.assertEquals("Wrong number of goals: ", 3, goals);
 //        Assert.assertEquals("Non-optimal coverage: ", 1d, best.getCoverage(), 0.001);
         Assert.assertTrue(true);
