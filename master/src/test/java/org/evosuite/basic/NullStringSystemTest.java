@@ -19,33 +19,21 @@
  */
 package org.evosuite.basic;
 
-import com.examples.with.different.packagename.DayOfWeek;
-import com.examples.with.different.packagename.Example;
+import com.examples.with.different.packagename.Add;
 import com.examples.with.different.packagename.NextDate;
-import com.examples.with.different.packagename.NextDateOriginal;
-import com.examples.with.different.packagename.Triangle;
-import com.examples.with.different.packagename.ValidDate;
-import org.apache.commons.collections.list.NodeCachingLinkedList;
 import org.evosuite.EvoSuite;
 import org.evosuite.Properties;
 import org.evosuite.SystemTestBase;
-import org.evosuite.coverage.branch.BranchCoverageSuiteFitness;
 import org.evosuite.coverage.branch.BranchCoverageTestFitness;
 import org.evosuite.ga.FitnessFunction;
 import org.evosuite.ga.metaheuristics.GeneticAlgorithm;
 import org.evosuite.strategy.TestGenerationStrategy;
-import org.evosuite.testcase.TestFitnessFunction;
 import org.evosuite.testsuite.TestSuiteChromosome;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.examples.with.different.packagename.NullString;
-
-import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 public class NullStringSystemTest extends SystemTestBase {
 
@@ -53,8 +41,10 @@ public class NullStringSystemTest extends SystemTestBase {
     public void testNullString() {
         EvoSuite evosuite = new EvoSuite();
 
-        String targetClass = NextDate.class.getCanonicalName();
+//        String targetClass = NextDate.class.getCanonicalName();
+//        String targetClass = NextDate.class.getCanonicalName();
 //        String targetClass = DayOfWeek.class.getCanonicalName();
+        String targetClass = Add.class.getCanonicalName();
 //        String targetClass = ValidDate.class.getCanonicalName();
 //        String targetClass = Example.class.getCanonicalName();
 //        String targetClass = TreeSet.class.getCanonicalName();
@@ -76,6 +66,7 @@ public class NullStringSystemTest extends SystemTestBase {
         Object result = evosuite.parseCommandLine(command);
         GeneticAlgorithm<?> ga = getGAFromResult(result);
         TestSuiteChromosome best = (TestSuiteChromosome) ga.getBestIndividual();
+        int numberOfNotCoveredGoals = best.getNumOfNotCoveredGoals();
         LinkedHashMap<FitnessFunction<TestSuiteChromosome>, Integer> uncoveredGoals = best.getNumsNotCoveredGoals();
         System.out.println("EvolvedTestSuite:\n" + best);
 
