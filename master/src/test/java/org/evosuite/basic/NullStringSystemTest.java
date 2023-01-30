@@ -19,6 +19,7 @@
  */
 package org.evosuite.basic;
 
+import com.examples.with.different.packagename.Add;
 import com.examples.with.different.packagename.DayOfWeek;
 import com.examples.with.different.packagename.Example;
 import com.examples.with.different.packagename.NextDate;
@@ -57,7 +58,8 @@ public class NullStringSystemTest extends SystemTestBase {
 
 //        String targetClass = NextDate.class.getCanonicalName();
 //        String targetClass = DayOfWeek.class.getCanonicalName();
-        String targetClass = ValidDate.class.getCanonicalName();
+        String targetClass = Add.class.getCanonicalName();
+//        String targetClass = ValidDate.class.getCanonicalName();
 //        String targetClass = Example.class.getCanonicalName();
 //        String targetClass = TreeSet.class.getCanonicalName();
 //        String targetClass = NextDateOriginal.class.getCanonicalName();
