@@ -106,7 +106,7 @@ public class NextDate {
      */
 
     private boolean isThirtyOneDayMonth(int month) {
-        return month == 1 || month == 3 || month == 5 || month == 8 || month == 10;
+        return month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10;
     }
 
 
