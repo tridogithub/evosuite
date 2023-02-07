@@ -126,9 +126,9 @@ public class IntPrimitiveStatement extends NumericalPrimitiveStatement<Integer> 
 
     public void randomizeYear(String methodName) {
         if("isValidDate".equalsIgnoreCase(methodName)) {
-            value = Randomness.nextInt(-1, 10001);
+            value = Randomness.nextInt(1799, 10001);
         } else {
-            value = Randomness.nextInt(402);
+            value = Randomness.nextInt(1800, 2023);
         }
 //        randomize();
 

@@ -6,7 +6,7 @@ package com.examples.with.different.packagename;
  */
 public class ValidDate {
     private static int MAX_VALID_YR = 9999;
-    private static int MIN_VALID_YR = 0;
+    private static int MIN_VALID_YR = 1800;
 
     // Returns true if
     // given year is valid.

@@ -42,9 +42,9 @@ public class NullStringSystemTest extends SystemTestBase {
         EvoSuite evosuite = new EvoSuite();
 
 //        String targetClass = NextDate.class.getCanonicalName();
-//        String targetClass = NextDate.class.getCanonicalName();
+        String targetClass = NextDate.class.getCanonicalName();
 //        String targetClass = DayOfWeek.class.getCanonicalName();
-        String targetClass = Add.class.getCanonicalName();
+//        String targetClass = Add.class.getCanonicalName();
 //        String targetClass = ValidDate.class.getCanonicalName();
 //        String targetClass = Example.class.getCanonicalName();
 //        String targetClass = TreeSet.class.getCanonicalName();

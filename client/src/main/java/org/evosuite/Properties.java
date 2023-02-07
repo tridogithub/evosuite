@@ -2516,4 +2516,56 @@ public class Properties {
     public static boolean isLazyArraysImplementationSelected() {
         return SELECTED_DSE_ARRAYS_MEMORY_MODEL_VERSION == DSE_ARRAYS_MEMORY_MODEL_VERSION.LAZY_VARIABLES;
     }
+
+    /**
+     *
+     */
+    public final static Map<Integer, Double> NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(30, 151.0);
+            put(41, 4.04);
+            put(42, 4.11);
+            put(44, 19.05);
+            put(50, 5.54);
+            put(51, 5.64);
+            put(53, 15.5);
+            put(54, 37.5);
+            put(57, 21.0);
+            put(62, 16.04);
+            put(63, 16.07);
+            put(65, 48.0);
+            put(73, 16.04);
+            put(74, 16.23);
+            put(76, 21.6);
+            put(77, 48.0);
+            put(78, 51.03);
+            put(80, 48.32);
+            put(84, 48.0);
+            put(85, 51.03);
+            put(88, 48.32);
+            put(90, 26.0);
+        }
+    };
+
+    public final static Map<Integer, Double> VALID_DATE_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(31, 4103.0);
+            put(34, 9.0);
+            put(36, 18.66);
+            put(41, 16.06);
+            put(42, 19.06);
+            put(43, 19.13);
+            put(44, 16.39);
+            put(45, 16.51);
+            put(52, 5.56);
+            put(54, 5.6);
+        }
+    };
+
+    public final static Map<Integer, Double> ADD_DATE_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+
+        }
+    };
+
 }
