@@ -82,7 +82,7 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
     private final Set<Integer> removedBranchesT = new LinkedHashSet<>();
     private final Set<Integer> removedBranchesF = new LinkedHashSet<>();
     private final Set<String> removedRootBranches = new LinkedHashSet<>();
-    private final Map<Integer, Double> branchDifficultyCoefficient = new HashMap<>();
+    private Map<Integer, Double> branchDifficultyCoefficient = new HashMap<>();
 
     /**
      * <p>
@@ -247,15 +247,15 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
             assert goal != null;
             int lineNumber = goal.getBranchGoal().getLineNumber();
             if (!trueDistance.containsKey(entry.getKey())) {
-                if (Properties.NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP.containsKey(lineNumber)) {
-                    trueDistance.put(entry.getKey(), entry.getValue() * Properties.NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP.get(lineNumber));
+                if (branchDifficultyCoefficient.containsKey(lineNumber)) {
+                    trueDistance.put(entry.getKey(), entry.getValue() * branchDifficultyCoefficient.get(lineNumber));
                 } else {
                     trueDistance.put(entry.getKey(), entry.getValue());
                 }
             } else {
-                if (Properties.NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP.containsKey(lineNumber)) {
+                if (branchDifficultyCoefficient.containsKey(lineNumber)) {
                     trueDistance.put(entry.getKey(), Math.min(trueDistance.get(entry.getKey()), entry.getValue())
-                            * Properties.NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP.get(lineNumber)
+                            * branchDifficultyCoefficient.get(lineNumber)
                     );
                 } else {
                     trueDistance.put(entry.getKey(),
@@ -289,15 +289,15 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
             assert goal != null;
             int lineNumber = goal.getBranchGoal().getLineNumber();
             if (!falseDistance.containsKey(entry.getKey())) {
-                if (Properties.NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP.containsKey(lineNumber)) {
-                    falseDistance.put(entry.getKey(), entry.getValue() * Properties.NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP.get(lineNumber));
+                if (branchDifficultyCoefficient.containsKey(lineNumber)) {
+                    falseDistance.put(entry.getKey(), entry.getValue() * branchDifficultyCoefficient.get(lineNumber));
                 } else {
                     falseDistance.put(entry.getKey(), entry.getValue());
                 }
             } else {
-                if (Properties.NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP.containsKey(lineNumber)) {
+                if (branchDifficultyCoefficient.containsKey(lineNumber)) {
                     falseDistance.put(entry.getKey(), Math.min(falseDistance.get(entry.getKey()), entry.getValue())
-                            * Properties.NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP.get(lineNumber)
+                            * branchDifficultyCoefficient.get(lineNumber)
                     );
                 } else {
                     falseDistance.put(entry.getKey(), Math.min(falseDistance.get(entry.getKey()), entry.getValue()));
@@ -423,6 +423,7 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
         Map<Integer, Double> falseDistance = new LinkedHashMap<>();
         Map<Integer, Integer> predicateCount = new LinkedHashMap<>();
         Map<String, Integer> callCount = new LinkedHashMap<>();
+        branchDifficultyCoefficient = Properties.DIFFICULTY_EFFICIENT_ARRAY;
 
         // Collect stats in the traces
         boolean hasTimeoutOrTestException = analyzeTraces(suite, results, predicateCount,

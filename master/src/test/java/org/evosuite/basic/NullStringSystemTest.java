@@ -20,7 +20,11 @@
 package org.evosuite.basic;
 
 import com.examples.with.different.packagename.Add;
+import com.examples.with.different.packagename.AddOrigin;
 import com.examples.with.different.packagename.NextDate;
+import com.examples.with.different.packagename.NextDateOrigin;
+import com.examples.with.different.packagename.ValidDate;
+import com.examples.with.different.packagename.ValidDateOrigin;
 import org.evosuite.EvoSuite;
 import org.evosuite.Properties;
 import org.evosuite.SystemTestBase;
@@ -42,10 +46,13 @@ public class NullStringSystemTest extends SystemTestBase {
         EvoSuite evosuite = new EvoSuite();
 
 //        String targetClass = NextDate.class.getCanonicalName();
-        String targetClass = NextDate.class.getCanonicalName();
+//        String targetClass = NextDate.class.getCanonicalName();
+        String targetClass = NextDateOrigin.class.getCanonicalName();
 //        String targetClass = DayOfWeek.class.getCanonicalName();
 //        String targetClass = Add.class.getCanonicalName();
+//        String targetClass = AddOrigin.class.getCanonicalName();
 //        String targetClass = ValidDate.class.getCanonicalName();
+//        String targetClass = ValidDateOrigin.class.getCanonicalName();
 //        String targetClass = Example.class.getCanonicalName();
 //        String targetClass = TreeSet.class.getCanonicalName();
 //        String targetClass = NextDateOriginal.class.getCanonicalName();
@@ -53,6 +60,10 @@ public class NullStringSystemTest extends SystemTestBase {
 //        String targetClass = Triangle.class.getCanonicalName();
         System.out.println(targetClass);
 //        String targetClass = Example.class.getCanonicalName();
+
+//        Properties.DIFFICULTY_EFFICIENT_ARRAY = Properties.NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP;
+//        Properties.DIFFICULTY_EFFICIENT_ARRAY = Properties.VALID_DATE_DIFFICULTY_COEFFICIENT_MAP;
+        Properties.DIFFICULTY_EFFICIENT_ARRAY = Properties.ADD_DATE_DIFFICULTY_COEFFICIENT_MAP;
 
         Properties.TARGET_CLASS = targetClass;
 //        Properties.ITERATION = 10;

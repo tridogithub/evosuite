@@ -31,7 +31,11 @@ import org.evosuite.utils.LoggingUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -1651,6 +1655,7 @@ public class Properties {
 
     //-----------------------------------------------------------------
     //TLBO algorithm
+
     /**
      * Get all parameters that are available
      *
@@ -1659,6 +1664,7 @@ public class Properties {
     public static Set<String> getParameters() {
         return parameterMap.keySet();
     }
+
     @Parameter(key = "iteration", group = "Search Algorithm", description = "Iteration size of TLBO algorithm")
     @IntValue(min = 10)
     public static int ITERATION = 50;
@@ -2564,8 +2570,35 @@ public class Properties {
 
     public final static Map<Integer, Double> ADD_DATE_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
         {
+            put(62, 5.0);
+            put(64, 5.002);
+            put(67, 407.0);
+            put(74, 5.0);
+            put(76, 5.004);
+            put(79, 205.5);
+            put(93, 4.07);
+            put(95, 18.0);
+            put(99, 4.0);
+            put(101, 5.004);
+            put(104, 205.5);
+            put(111, 4.0);
+            put(113, 5.004);
+            put(116, 205.5);
+            put(126, 4.07);
+            put(129, 18.0);
+            put(132, 18.0);
 
+            put(224, 9.0);
+            put(226, 18.66);
+            put(231, 16.06);
+            put(232, 19.06);
+            put(233, 19.13);
+            put(234, 16.39);
+            put(235, 16.51);
+            put(242, 5.56);
+            put(244, 5.6);
         }
     };
 
+    public static Map<Integer, Double> DIFFICULTY_EFFICIENT_ARRAY = new HashMap<>();
 }
