@@ -27,8 +27,8 @@ public class NextDateOrigin {
         int year = y;
 
         //Restrictions that the year must have the following invariant: 1801 <= year <= 2021
-        if (day < 1 || month < 1 || month > 12
-                || year < 1801 || year > 2021
+        if (day < 1 || day > 31 || month < 1 || month > 12
+                || year < 1801 || year > 9999
         )
             return "invalid Input Date";
 

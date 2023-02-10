@@ -423,7 +423,12 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
         Map<Integer, Double> falseDistance = new LinkedHashMap<>();
         Map<Integer, Integer> predicateCount = new LinkedHashMap<>();
         Map<String, Integer> callCount = new LinkedHashMap<>();
-        branchDifficultyCoefficient = Properties.DIFFICULTY_EFFICIENT_ARRAY;
+        if(Properties.PROPOSED_DC) {
+            branchDifficultyCoefficient = Properties.DIFFICULTY_EFFICIENT_ARRAY;
+        }
+        if(Properties.SAKTI_DC) {
+            branchDifficultyCoefficient = Properties.SAKTI_DIFFICULTY_EFFICIENT_ARRAY;
+        }
 
         // Collect stats in the traces
         boolean hasTimeoutOrTestException = analyzeTraces(suite, results, predicateCount,

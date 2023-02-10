@@ -4,7 +4,7 @@ package org;
  * @author tridv on 17/1/2023
  * @project evosuite
  */
-public class ValidDate {
+public class ValidDateOrigin {
     private static int MAX_VALID_YR = 9999;
     private static int MIN_VALID_YR = 1800;
 
@@ -22,9 +22,10 @@ public class ValidDate {
 
     // Returns true if given
     // year is valid or not.
-    public boolean isValidDate(int d,
-                               int m,
-                               int y) {
+    public boolean isValidDateOld(
+            int m,
+            int d,
+            int y) {
         // If year, month and day
         // are not in given range
         if (y > MAX_VALID_YR ||

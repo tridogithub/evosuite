@@ -116,20 +116,22 @@ public class IntPrimitiveStatement extends NumericalPrimitiveStatement<Integer> 
 
     public void randomizeMonth() {
         value = Randomness.nextInt(14);
+//        value = Randomness.nextInt(0, 101);
 //        randomize();
     }
 
     public void randomizeDay() {
         value = Randomness.nextInt(33);
+//        value = Randomness.nextInt(0, 101);
 //        randomize();
     }
 
     public void randomizeYear(String methodName) {
-        if("isValidDate".equalsIgnoreCase(methodName)) {
-            value = Randomness.nextInt(1799, 10001);
-        } else {
-            value = Randomness.nextInt(1800, 2023);
-        }
+//        if("isValidDate".equalsIgnoreCase(methodName)) {
+//            value = Randomness.nextInt(1799, 10001);
+//        } else {
+        value = Randomness.nextInt(1799, 10001);
+//        }
 //        randomize();
 
     }

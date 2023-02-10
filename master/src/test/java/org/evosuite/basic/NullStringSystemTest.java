@@ -47,25 +47,31 @@ public class NullStringSystemTest extends SystemTestBase {
 
 //        String targetClass = NextDate.class.getCanonicalName();
 //        String targetClass = NextDate.class.getCanonicalName();
-        String targetClass = NextDateOrigin.class.getCanonicalName();
+//        String targetClass = NextDateOrigin.class.getCanonicalName();
 //        String targetClass = DayOfWeek.class.getCanonicalName();
 //        String targetClass = Add.class.getCanonicalName();
 //        String targetClass = AddOrigin.class.getCanonicalName();
 //        String targetClass = ValidDate.class.getCanonicalName();
-//        String targetClass = ValidDateOrigin.class.getCanonicalName();
+        String targetClass = ValidDateOrigin.class.getCanonicalName();
 //        String targetClass = Example.class.getCanonicalName();
 //        String targetClass = TreeSet.class.getCanonicalName();
 //        String targetClass = NextDateOriginal.class.getCanonicalName();
 //        String targetClass = NullString.class.getCanonicalName();
 //        String targetClass = Triangle.class.getCanonicalName();
         System.out.println(targetClass);
-//        String targetClass = Example.class.getCanonicalName();
 
+//        Properties.PROPOSED_DC = true;
 //        Properties.DIFFICULTY_EFFICIENT_ARRAY = Properties.NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP;
 //        Properties.DIFFICULTY_EFFICIENT_ARRAY = Properties.VALID_DATE_DIFFICULTY_COEFFICIENT_MAP;
-        Properties.DIFFICULTY_EFFICIENT_ARRAY = Properties.ADD_DATE_DIFFICULTY_COEFFICIENT_MAP;
+//        Properties.DIFFICULTY_EFFICIENT_ARRAY = Properties.ADD_DATE_DIFFICULTY_COEFFICIENT_MAP;
+
+//        Properties.SAKTI_DC = true;
+//        Properties.SAKTI_DIFFICULTY_EFFICIENT_ARRAY = Properties.SAKTI_NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP;
+//        Properties.SAKTI_DIFFICULTY_EFFICIENT_ARRAY = Properties.SAKTI_VALID_DATE_DIFFICULTY_COEFFICIENT_MAP;
+//        Properties.SAKTI_DIFFICULTY_EFFICIENT_ARRAY = Properties.SAKTI_ADD_DATE_DIFFICULTY_COEFFICIENT_MAP;
 
         Properties.TARGET_CLASS = targetClass;
+        Properties.CRITERION = new Properties.Criterion[]{Properties.Criterion.BRANCH};
 //        Properties.ITERATION = 10;
 //        Properties.STRATEGY = Properties.Strategy.TLBO;
 //        String[] command = new String[]{"-generateSuite", "-class", targetClass, "-Dstrategy="+Properties.Strategy.TLBO.name()};
@@ -87,14 +93,6 @@ public class NullStringSystemTest extends SystemTestBase {
 //        Assert.assertEquals("Wrong number of goals: ", 3, goals);
 //        Assert.assertEquals("Non-optimal coverage: ", 1d, best.getCoverage(), 0.001);
         Assert.assertTrue(true);
-
-//        TreeMap
-//        TreeSet
-//        NodeCachingLinkedList
-
-//        NextDate -> reduce
-//        ValidDate
-//        DayOfWeek
 
     }
 }
