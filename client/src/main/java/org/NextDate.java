@@ -26,7 +26,6 @@ public class NextDate {
         int day = d;
         int year = y;
 
-        //Restrictions that the year must have the following invariant: 1801 <= year <= 2021
         if (day < 1 || day >31 || month < 1 || month > 12
                 || year < 1801 || year > 9999
         )
@@ -182,11 +181,5 @@ public class NextDate {
     {
         this.y = y;
     }
-
-    /****************************************************
-     * Main method is only used for testing purposes, no unit tests need to
-     * be written for this method.
-     * @param args
-     */
 
 }

@@ -146,6 +146,31 @@ public class DoublePrimitiveStatement extends NumericalPrimitiveStatement<Double
         }
     }
 
+    public void randomizeArg0() {
+        if (Randomness.nextDouble() >= Properties.PRIMITIVE_POOL) {
+            value = Randomness.nextDouble(-1, 1);
+            int precision = Randomness.nextInt(15);
+            chopPrecision(precision);
+        } else {
+            ConstantPool constantPool = ConstantPoolManager.getInstance().getConstantPool();
+            value = constantPool.getRandomDouble();
+        }
+    }
+
+    public void randomizeArg1() {
+        if (Randomness.nextDouble() >= Properties.PRIMITIVE_POOL) {
+//            value = Randomness.nextGaussian() * Properties.MAX_INT;
+            value = Randomness.nextDouble(-1, 1);
+            int precision = Randomness.nextInt(15);
+            chopPrecision(precision);
+        } else {
+            ConstantPool constantPool = ConstantPoolManager.getInstance().getConstantPool();
+            value = constantPool.getRandomDouble();
+        }
+    }
+
+
+
     /* (non-Javadoc)
      * @see org.evosuite.testcase.PrimitiveStatement#increment()
      */

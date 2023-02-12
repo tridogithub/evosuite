@@ -62,25 +62,18 @@ public class Add {
             if (this.currentERA == AD) {
                 year += amount;
                 if (year > 0) {
-//                    set(YEAR, year);
                     this.currentYear = year;
                 } else { // year <= 0
-//                    set(YEAR, 1 - year);
                     this.currentYear = 1 - year;
-                    // if year == 0, you get 1 BCE.
-//                    set(ERA, BCE);
                     this.currentERA = BC;
                 }
             } else { // era == BCE
                 year -= amount;
                 if (year > 0) {
-//                    set(YEAR, year);
                     this.currentYear = year;
                 } else { // year <= 0
-//                    set(YEAR, 1 - year);
                     this.currentYear = 1 - year;
                     // if year == 0, you get 1 CE
-//                    set(ERA, CE);
                     this.currentERA = AD;
                 }
             }
@@ -99,32 +92,25 @@ public class Add {
                 if (this.currentERA == AD) {
                     year += y_amount;
                     if (year > 0) {
-//                        set(YEAR, year);
                         this.currentYear = year;
                     } else { // year <= 0
-//                        set(YEAR, 1 - year);
                         this.currentYear = 1 - year;
                         // if year == 0, you get 1 BCE
-//                        set(ERA, BCE);
                         this.currentERA = BC;
                     }
                 } else { // era == BCE
                     year -= y_amount;
                     if (year > 0) {
-//                        set(YEAR, year);
                         this.currentYear = year;
                     } else { // year <= 0
-//                        set(YEAR, 1 - year);
                         this.currentYear = 1 - year;
                         // if year == 0, you get 1 CE
-//                        set(ERA, CE);
                         this.currentERA = AD;
                     }
                 }
             }
 
             if (month >= 0) {
-//                set(MONTH, month % 12);
                 this.currentMonth = month % 12;
             } else {
                 // month < 0
@@ -132,7 +118,6 @@ public class Add {
                 if (month < 0) {
                     month += 12;
                 }
-//                set(MONTH, JANUARY + month);
                 this.currentMonth = JANUARY + month;
             }
             pinDayOfMonth();
@@ -160,7 +145,6 @@ public class Add {
             if (era > 1) {
                 era = 1;
             }
-//            set(ERA, era);
             this.currentERA = era;
         }
         int newDay = this.currentDay;
@@ -177,7 +161,6 @@ public class Add {
 
         int dom = this.currentDay;
         if (dom > monthLen) {
-//            set(DAY_OF_MONTH, monthLen);
             this.currentDay = monthLen;
         }
     }

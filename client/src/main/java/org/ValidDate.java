@@ -4,7 +4,7 @@ package org;
  * @author tridv on 17/1/2023
  * @project evosuite
  */
-public class ValidDateOrigin {
+public class ValidDate {
     private static int MAX_VALID_YR = 9999;
     private static int MIN_VALID_YR = 1800;
 
@@ -22,7 +22,7 @@ public class ValidDateOrigin {
 
     // Returns true if given
     // year is valid or not.
-    public boolean isValidDateOld(
+    public boolean isValidDate(
             int m,
             int d,
             int y) {
@@ -55,17 +55,4 @@ public class ValidDateOrigin {
 
         return true;
     }
-
-    // Driver code
-//    public static void main(String args[]) {
-//        if (isValidDate(10, 12, 2000))
-//            System.out.println("Yes");
-//        else
-//            System.out.println("No");
-//
-//        if (isValidDate(31, 11, 2000))
-//            System.out.println("Yes");
-//        else
-//            System.out.println("No");
-//    }
 }

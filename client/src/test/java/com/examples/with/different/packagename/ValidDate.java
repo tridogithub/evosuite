@@ -55,17 +55,4 @@ public class ValidDate {
 
         return true;
     }
-
-    // Driver code
-//    public static void main(String args[]) {
-//        if (isValidDate(10, 12, 2000))
-//            System.out.println("Yes");
-//        else
-//            System.out.println("No");
-//
-//        if (isValidDate(31, 11, 2000))
-//            System.out.println("Yes");
-//        else
-//            System.out.println("No");
-//    }
 }

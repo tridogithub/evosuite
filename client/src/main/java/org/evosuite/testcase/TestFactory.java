@@ -46,6 +46,7 @@ import org.evosuite.testcase.statements.NullStatement;
 import org.evosuite.testcase.statements.PrimitiveStatement;
 import org.evosuite.testcase.statements.Statement;
 import org.evosuite.testcase.statements.environment.EnvironmentStatements;
+import org.evosuite.testcase.statements.numeric.DoublePrimitiveStatement;
 import org.evosuite.testcase.statements.numeric.IntPrimitiveStatement;
 import org.evosuite.testcase.statements.reflection.PrivateFieldStatement;
 import org.evosuite.testcase.statements.reflection.PrivateMethodStatement;
@@ -305,7 +306,7 @@ public class TestFactory {
             List<VariableReference> parameters;
             if (
                     klass.getSimpleName().equalsIgnoreCase("NextDate")
-                    || klass.getSimpleName().equalsIgnoreCase("Add")
+                            || klass.getSimpleName().equalsIgnoreCase("Add")
             ) {
                 parameters = satisfyNextDateParameters(test,
                         null,
@@ -537,6 +538,9 @@ public class TestFactory {
             if (
                     method.getOwnerClass().getSimpleName().equalsIgnoreCase("NextDate")
                             || method.getOwnerClass().getSimpleName().equalsIgnoreCase("ValidDate")
+                            || method.getOwnerClass().getSimpleName().equalsIgnoreCase("Expint")
+                            || method.getOwnerClass().getSimpleName().equalsIgnoreCase("Gammq")
+                            || method.getOwnerClass().getSimpleName().equalsIgnoreCase("Bessj")
             ) {
                 parameters = satisfyNextDateParameters(
                         test, callee,
@@ -601,7 +605,10 @@ public class TestFactory {
         List<VariableReference> parameters;
         if (
                 method.getOwnerClass().getSimpleName().equalsIgnoreCase("NextDate")
-                || method.getOwnerClass().getSimpleName().equalsIgnoreCase("ValidDate")
+                        || method.getOwnerClass().getSimpleName().equalsIgnoreCase("ValidDate")
+                        || method.getOwnerClass().getSimpleName().equalsIgnoreCase("Expint")
+                        || method.getOwnerClass().getSimpleName().equalsIgnoreCase("Gammq")
+                        || method.getOwnerClass().getSimpleName().equalsIgnoreCase("Bessj")
         ) {
             Class klass = method.getMethod().getDeclaringClass();
             parameters = satisfyNextDateParameters(
@@ -801,10 +808,13 @@ public class TestFactory {
             if (klass != null &&
                     (
                             "NextDate".equalsIgnoreCase(klass.getSimpleName())
-                    || "ValidDate".equalsIgnoreCase(klass.getSimpleName())
-                    || "Add".equalsIgnoreCase(klass.getSimpleName())
+                                    || "ValidDate".equalsIgnoreCase(klass.getSimpleName())
+                                    || "Add".equalsIgnoreCase(klass.getSimpleName())
+                                    || "Expint".equalsIgnoreCase(klass.getSimpleName())
+                                    || "Gammq".equalsIgnoreCase(klass.getSimpleName())
+                                    || "Bessj".equalsIgnoreCase(klass.getSimpleName())
                     )
-            ){
+            ) {
                 return createPrimitiveNextDate(test, clazz, position, recursionDepth, parameter, methodName);
             } else {
                 return createPrimitive(test, clazz, position, recursionDepth);
@@ -1244,10 +1254,40 @@ public class TestFactory {
             ) {
                 intPrimitiveStatement.randomizeYear(methodName);
             }
+            else if (parameter.getName().equalsIgnoreCase("arg0") &&
+                    (
+                            "bessj".equals(methodName)
+                                    || "expint".equals(methodName)
+                                    || "gammq".equals(methodName)
+                    )
+            ) {
+                intPrimitiveStatement.randomizeArg0();
+            }
             VariableReference ret = test.addStatement(intPrimitiveStatement, position);
             ret.setDistance(recursionDepth);
             return ret;
+        } else if(st instanceof DoublePrimitiveStatement && parameter != null){
+            DoublePrimitiveStatement doublePrimitiveStatement = (DoublePrimitiveStatement) st;
+            if (parameter.getName().equalsIgnoreCase("arg0") &&
+                    (
+                            "bessj".equals(methodName)
+                                    || "expint".equals(methodName)
+                                    || "gammq".equals(methodName)
+                    )
+            ) {
+                doublePrimitiveStatement.randomizeArg0();
+            }
+            else if (parameter.getName().equalsIgnoreCase("arg1") &&
+                    (
+                            "bessj".equals(methodName)
+                                    || "expint".equals(methodName)
+                                    || "gammq".equals(methodName)
+                    )
+            ) {
+                doublePrimitiveStatement.randomizeArg1();
+            }
         }
+
         VariableReference ret = test.addStatement(st, position);
         ret.setDistance(recursionDepth);
         return ret;
