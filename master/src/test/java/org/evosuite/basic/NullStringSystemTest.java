@@ -48,7 +48,7 @@ public class NullStringSystemTest extends SystemTestBase {
     public void testNullString() {
         EvoSuite evosuite = new EvoSuite();
 
-//        String targetClass = NextDate.class.getCanonicalName();
+        String targetClass = NextDate.class.getCanonicalName();
 //        String targetClass = NextDate.class.getCanonicalName();
 //        String targetClass = NextDateOrigin.class.getCanonicalName();
 //        String targetClass = DayOfWeek.class.getCanonicalName();
@@ -62,10 +62,10 @@ public class NullStringSystemTest extends SystemTestBase {
 //        String targetClass = NullString.class.getCanonicalName();
 //        String targetClass = Triangle.class.getCanonicalName();
 
-        String targetClass = Bessj.class.getCanonicalName();
+//        String targetClass = Bessj.class.getCanonicalName();
 //        String targetClass = Expint.class.getCanonicalName();
 //        String targetClass = Gammq.class.getCanonicalName();
-        System.out.println(targetClass);
+//        System.out.println(targetClass);
 
 //        Properties.PROPOSED_DC = true;
 //        Properties.DIFFICULTY_EFFICIENT_ARRAY = Properties.NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP;

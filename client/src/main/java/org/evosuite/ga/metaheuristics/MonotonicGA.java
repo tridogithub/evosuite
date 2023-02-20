@@ -219,6 +219,7 @@ public class MonotonicGA<T extends Chromosome<T>> extends GeneticAlgorithm<T> {
         }
 
         logger.debug("Starting evolution");
+        System.out.println("Starting evolution");
         int starvationCounter = 0;
         double bestFitness = Double.MAX_VALUE;
         double lastBestFitness = Double.MAX_VALUE;
@@ -226,10 +227,12 @@ public class MonotonicGA<T extends Chromosome<T>> extends GeneticAlgorithm<T> {
             bestFitness = 0.0;
             lastBestFitness = 0.0;
         }
+        System.out.println("-------------------------------------------------------------");
 
         while (!isFinished()) {
 
             logger.info("Population size before: " + population.size());
+            System.out.println("Population size before: " + population.size());
             // related to Properties.ENABLE_SECONDARY_OBJECTIVE_AFTER;
             // check the budget progress and activate a secondary criterion
             // according to the property value.
@@ -298,12 +301,17 @@ public class MonotonicGA<T extends Chromosome<T>> extends GeneticAlgorithm<T> {
             updateSecondaryCriterion(starvationCounter);
 
             logger.info("Current iteration: " + currentIteration);
+            System.out.println("Current iteration: " + currentIteration);
             this.notifyIteration();
 
             logger.info("Population size: " + population.size());
             logger.info("Best individual has fitness: " + population.get(0).getFitness());
             logger.info("Worst individual has fitness: " + population.get(population.size() - 1).getFitness());
 
+            System.out.println("Population size: " + population.size());
+            System.out.println("Best individual has fitness: " + population.get(0).getFitness());
+            System.out.println("Worst individual has fitness: " + population.get(population.size() - 1).getFitness());
+            System.out.println("-------------------------------------------------------------");
         }
         // archive
         TimeController.execute(this::updateBestIndividualFromArchive, "update from archive", 5_000);
