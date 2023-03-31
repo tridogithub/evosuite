@@ -19,15 +19,8 @@
  */
 package org.evosuite.basic;
 
-import com.examples.with.different.packagename.Add;
-import com.examples.with.different.packagename.AddOrigin;
-import com.examples.with.different.packagename.Bessj;
-import com.examples.with.different.packagename.Expint;
-import com.examples.with.different.packagename.Gammq;
+import com.examples.with.different.packagename.GECCO.EI;
 import com.examples.with.different.packagename.NextDate;
-import com.examples.with.different.packagename.NextDateOrigin;
-import com.examples.with.different.packagename.ValidDate;
-import com.examples.with.different.packagename.ValidDateOrigin;
 import org.evosuite.EvoSuite;
 import org.evosuite.Properties;
 import org.evosuite.SystemTestBase;
@@ -48,7 +41,7 @@ public class NullStringSystemTest extends SystemTestBase {
     public void testNullString() {
         EvoSuite evosuite = new EvoSuite();
 
-        String targetClass = NextDate.class.getCanonicalName();
+//        String targetClass = NextDate.class.getCanonicalName();
 //        String targetClass = NextDate.class.getCanonicalName();
 //        String targetClass = NextDateOrigin.class.getCanonicalName();
 //        String targetClass = DayOfWeek.class.getCanonicalName();
@@ -65,6 +58,7 @@ public class NullStringSystemTest extends SystemTestBase {
 //        String targetClass = Bessj.class.getCanonicalName();
 //        String targetClass = Expint.class.getCanonicalName();
 //        String targetClass = Gammq.class.getCanonicalName();
+        String targetClass = EI.class.getCanonicalName();
 //        System.out.println(targetClass);
 
 //        Properties.PROPOSED_DC = true;

@@ -1,4 +1,4 @@
-package com.examples.with.different.packagename;
+package com.examples.with.different.packagename.GECCO;
 
 import org.mockito.internal.stubbing.answers.Returns;
 
