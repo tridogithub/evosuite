@@ -28,6 +28,10 @@ import org.objectweb.asm.Opcodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Map;
 
 
@@ -591,6 +595,8 @@ public class ExecutionTracer {
                 // val1 > val2?
                 distance_true = val1 > val2 ? (double) val1 - (double) val2 + 1.0 : 0.0;
                 distance_false = val1 <= val2 ? (double) val2 - (double) val1 + 1.0 : 0.0;
+                String content = "Branch " + branch + ": val1,val2-" + val1 + "," + val2 + ": " + distance_true + " - " + distance_false + "\n";
+                appendToFile("log.txt", content);
                 break;
             default:
                 logger.error("Unknown opcode: " + opcode);
@@ -823,6 +829,38 @@ public class ExecutionTracer {
 
     private ExecutionTracer() {
         trace = new ExecutionTraceProxy();
+    }
+
+    private static void appendToFile(String fileName, String content) {
+        BufferedWriter writer = null;
+        try {
+            File file = new File(fileName);
+
+            // Create the file if it does not exist
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            // Open the file in append mode
+            FileWriter fileWriter = new FileWriter(file, true);
+            writer = new BufferedWriter(fileWriter);
+
+            // Write content to file
+            writer.write(content);
+            writer.newLine();
+
+            System.out.println("Content appended to file successfully.");
+        } catch (IOException e) {
+            System.err.println("Error appending to file: " + e.getMessage());
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                System.err.println("Error closing file writer: " + e.getMessage());
+            }
+        }
     }
 
 }

@@ -19,20 +19,21 @@
  */
 package org.evosuite.basic;
 
+import com.examples.with.different.packagename.Add;
 import com.examples.with.different.packagename.GECCO.EI;
 import com.examples.with.different.packagename.NextDate;
+import com.examples.with.different.packagename.Triangle;
+import com.examples.with.different.packagename.ValidDate;
 import org.evosuite.EvoSuite;
 import org.evosuite.Properties;
 import org.evosuite.SystemTestBase;
 import org.evosuite.coverage.branch.BranchCoverageTestFitness;
-import org.evosuite.ga.FitnessFunction;
 import org.evosuite.ga.metaheuristics.GeneticAlgorithm;
 import org.evosuite.strategy.TestGenerationStrategy;
 import org.evosuite.testsuite.TestSuiteChromosome;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public class NullStringSystemTest extends SystemTestBase {
@@ -41,7 +42,7 @@ public class NullStringSystemTest extends SystemTestBase {
     public void testNullString() {
         EvoSuite evosuite = new EvoSuite();
 
-//        String targetClass = NextDate.class.getCanonicalName();
+        String targetClass = Triangle.class.getCanonicalName();
 //        String targetClass = NextDate.class.getCanonicalName();
 //        String targetClass = NextDateOrigin.class.getCanonicalName();
 //        String targetClass = DayOfWeek.class.getCanonicalName();
@@ -58,7 +59,7 @@ public class NullStringSystemTest extends SystemTestBase {
 //        String targetClass = Bessj.class.getCanonicalName();
 //        String targetClass = Expint.class.getCanonicalName();
 //        String targetClass = Gammq.class.getCanonicalName();
-        String targetClass = EI.class.getCanonicalName();
+//        String targetClass = EI.class.getCanonicalName();
 //        System.out.println(targetClass);
 
 //        Properties.PROPOSED_DC = true;
@@ -76,16 +77,18 @@ public class NullStringSystemTest extends SystemTestBase {
 //        Properties.ITERATION = 10;
 //        Properties.STRATEGY = Properties.Strategy.TLBO;
 //        String[] command = new String[]{"-generateSuite", "-class", targetClass, "-Dstrategy="+Properties.Strategy.TLBO.name()};
+        Properties.RANDOM_SEED = System.currentTimeMillis();
         Properties.ALGORITHM = Properties.Algorithm.MONOTONIC_GA;
         String[] command = new String[]{"-generateSuite", "-class", targetClass};
+//        String[] command = new String[]{"-generateTests", "-class", targetClass};
 //        Properties.NULL_PROBABILITY = 1;
 
 
         Object result = evosuite.parseCommandLine(command);
         GeneticAlgorithm<?> ga = getGAFromResult(result);
         TestSuiteChromosome best = (TestSuiteChromosome) ga.getBestIndividual();
-        int numberOfNotCoveredGoals = best.getNumOfNotCoveredGoals();
-        LinkedHashMap<FitnessFunction<TestSuiteChromosome>, Integer> uncoveredGoals = best.getNumsNotCoveredGoals();
+//        int numberOfNotCoveredGoals = best.getNumOfNotCoveredGoals();
+//        LinkedHashMap<FitnessFunction<TestSuiteChromosome>, Integer> uncoveredGoals = best.getNumsNotCoveredGoals();
         System.out.println("EvolvedTestSuite:\n" + best);
 
         List<BranchCoverageTestFitness> coverageGoals = (List<BranchCoverageTestFitness>) TestGenerationStrategy.getFitnessFactories().get(0).getCoverageGoals();

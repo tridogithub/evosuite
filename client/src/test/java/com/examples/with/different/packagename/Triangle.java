@@ -5,13 +5,13 @@ package com.examples.with.different.packagename;
  * @project evosuite
  */
 public class Triangle {
-    int NOT_A_TRIANGLE = 0;
-    int SCALENE = 1;
-    int EQUILATERAL = 2;
-    int ISOSCELES = 3;
+    private final String NOT_A_TRIANGLE = "0";
+    private final String SCALENE = "1";
+    private final String EQUILATERAL = "2";
+    private final String ISOSCELES = "3";
 
-    int check(int a, int b, int c) {
-        int type;
+    String check(int a, int b, int c) {
+        String type;
         int t;
         if (a > b) {
             t = a;
@@ -40,7 +40,7 @@ public class Triangle {
                 }
             }
         }
-        return type;
+        return "false";
     }
 
 

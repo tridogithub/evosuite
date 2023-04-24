@@ -137,8 +137,9 @@ public class SystemTestBase {
         //change seed every month
         long seed = new GregorianCalendar().get(Calendar.MONTH);
 //		long seed = getSeed();
+// Modified
         Randomness.setSeed(seed);
-
+// Modified
         currentProperties = (java.util.Properties) System.getProperties().clone();
 
         MockFramework.enable();

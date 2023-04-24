@@ -21,6 +21,7 @@ package org.evosuite.testsuite;
 
 import org.evosuite.Properties;
 import org.evosuite.ga.ChromosomeFactory;
+import org.evosuite.ga.FitnessFunction;
 import org.evosuite.ga.SecondaryObjective;
 import org.evosuite.ga.localsearch.LocalSearchObjective;
 import org.evosuite.testcase.TestCase;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toCollection;
@@ -283,10 +285,14 @@ public final class TestSuiteChromosome
                 result += test.getTestCase().toCode() + "\n";
             }
 
-            result += "\n" + "Test case fitness value: " + test.getFitness();
+//            test.getTestCase()
+//            test.goal
+//            OnlyBranchCoverageTestFitness onlyBranchCoverageTestFitness = new OnlyBranchCoverageTestFitness();
+            Map<FitnessFunction<TestChromosome>, Double> tmp = test.getPreviousFitnessValues();
+//            result += "\n" + "Test case fitness value: " + test.getFitness();
 //            result += "\n" + "Test case coverage value: " + test.getCoverage();
 //            result += "\n" + "Test case's number of coverage goals: " + test.getNumOfCoveredGoals();
-            result += "\n" + "-------------------------------------------------------------" +"\n";
+            result += "\n" + "-------------------------------------------------------------" + "\n";
 
         }
         return result;
