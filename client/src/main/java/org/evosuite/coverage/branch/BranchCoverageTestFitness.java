@@ -21,6 +21,7 @@ package org.evosuite.coverage.branch;
 
 import org.evosuite.Properties;
 import org.evosuite.coverage.ControlFlowDistance;
+import org.evosuite.ga.FitnessFunction;
 import org.evosuite.ga.archive.Archive;
 import org.evosuite.testcase.ExecutableChromosome;
 import org.evosuite.testcase.TestChromosome;
@@ -29,6 +30,12 @@ import org.evosuite.testcase.execution.ExecutionResult;
 import org.evosuite.testcase.execution.MethodCall;
 import org.evosuite.utils.ArrayUtil;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -39,6 +46,8 @@ import java.util.Objects;
 public class BranchCoverageTestFitness extends TestFitnessFunction {
 
     private static final long serialVersionUID = -6310967747257242580L;
+
+    private Map<Integer, Double> branchDifficultyCoefficient = new HashMap<>();
 
     /**
      * Target branch
@@ -161,6 +170,17 @@ public class BranchCoverageTestFitness extends TestFitnessFunction {
 
         double fitness = distance.getResultingBranchFitness();
 
+//        if (Properties.PROPOSED_DC) {
+//            branchDifficultyCoefficient = Properties.DIFFICULTY_EFFICIENT_ARRAY;
+//            if (branchDifficultyCoefficient.containsKey(goal.getLineNumber())) {
+//                fitness = distance.approachLevel + FitnessFunction.normalize(
+//                        distance.branchDistance * branchDifficultyCoefficient.get(goal.getLineNumber())
+//                );
+//            }
+//        }
+
+//        System.out.println("Goal at line " + goal.getLineNumber() + ": approach level = " + distance.getApproachLevel()
+//                + " / branch distance = " + distance.getBranchDistance() + ", fitness = " + fitness);
         if (logger.isDebugEnabled()) {
             logger.debug("Goal at line " + goal.getLineNumber() + ": approach level = " + distance.getApproachLevel()
                     + " / branch distance = " + distance.getBranchDistance() + ", fitness = " + fitness);
@@ -246,6 +266,38 @@ public class BranchCoverageTestFitness extends TestFitnessFunction {
     @Override
     public String getTargetMethod() {
         return getMethod();
+    }
+
+    private static void appendToFile(String fileName, String content) {
+        BufferedWriter writer = null;
+        try {
+            File file = new File(fileName);
+
+            // Create the file if it does not exist
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            // Open the file in append mode
+            FileWriter fileWriter = new FileWriter(file, true);
+            writer = new BufferedWriter(fileWriter);
+
+            // Write content to file
+            writer.write(content);
+            writer.newLine();
+
+            System.out.println("Content appended to file successfully.");
+        } catch (IOException e) {
+            System.err.println("Error appending to file: " + e.getMessage());
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                System.err.println("Error closing file writer: " + e.getMessage());
+            }
+        }
     }
 
 }

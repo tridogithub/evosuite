@@ -365,4 +365,11 @@ public class GraphPool {
         instanceMap.clear();
     }
 
+    public Map<String, ActualControlFlowGraph> getActualCFGs(String className) {
+        if (!this.actualCFGs.containsKey(className)) {
+            return null;
+        } else {
+            return this.actualCFGs.get(className);
+        }
+    }
 }

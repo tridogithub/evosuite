@@ -442,6 +442,8 @@ public abstract class EvoSuiteGraph<V, E extends DefaultEdge> {
      * @return a int.
      */
     public int edgeCount() {
+        String methodName = this.getName();
+        int edgeSize = graph.edgeSet().size();
         return graph.edgeSet().size();
     }
 

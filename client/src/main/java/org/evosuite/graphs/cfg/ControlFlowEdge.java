@@ -161,4 +161,9 @@ public class ControlFlowEdge extends DefaultEdge {
             r += cd.toString();
         return r;
     }
+
+    public BasicBlock getTarget() {
+        return this.getTarget();
+    }
+
 }

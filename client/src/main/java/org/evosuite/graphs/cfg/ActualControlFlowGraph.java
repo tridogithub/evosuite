@@ -19,6 +19,7 @@
  */
 package org.evosuite.graphs.cfg;
 
+import org.jgrapht.DirectedGraph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -842,5 +843,9 @@ public class ActualControlFlowGraph extends ControlFlowGraph<BasicBlock> {
     @Override
     public String getCFGType() {
         return "ACFG";
+    }
+
+    public DirectedGraph getGraph() {
+        return this.graph;
     }
 }

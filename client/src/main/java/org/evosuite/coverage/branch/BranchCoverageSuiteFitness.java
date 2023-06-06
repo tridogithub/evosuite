@@ -22,7 +22,13 @@ package org.evosuite.coverage.branch;
 import org.evosuite.Properties;
 import org.evosuite.TestGenerationContext;
 import org.evosuite.ga.archive.Archive;
+import org.evosuite.graphs.GraphPool;
+import org.evosuite.graphs.cfg.ActualControlFlowGraph;
+import org.evosuite.graphs.cfg.BytecodeInstruction;
 import org.evosuite.graphs.cfg.CFGMethodAdapter;
+import org.evosuite.graphs.cfg.ControlDependency;
+import org.evosuite.graphs.cfg.ControlFlowEdge;
+import org.evosuite.graphs.cfg.RawControlFlowGraph;
 import org.evosuite.testcase.TestChromosome;
 import org.evosuite.testcase.TestFitnessFunction;
 import org.evosuite.testcase.execution.ExecutionResult;
@@ -30,6 +36,7 @@ import org.evosuite.testcase.statements.ConstructorStatement;
 import org.evosuite.testcase.statements.Statement;
 import org.evosuite.testsuite.TestSuiteChromosome;
 import org.evosuite.testsuite.TestSuiteFitnessFunction;
+import org.jgrapht.graph.DefaultDirectedGraph;
 import org.objectweb.asm.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +44,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -85,6 +93,7 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
     private final Set<Integer> removedBranchesF = new LinkedHashSet<>();
     private final Set<String> removedRootBranches = new LinkedHashSet<>();
     private Map<Integer, Double> branchDifficultyCoefficient = new HashMap<>();
+    private ClassLoader classLoader;
 
     /**
      * <p>
@@ -120,6 +129,8 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
         logger.info("Total branches: " + totalBranches);
         logger.info("Total branchless methods: " + branchlessMethodCoverageMap.size());
         logger.info("Total methods: " + totalMethods + ": " + methods);
+
+        this.classLoader = classLoader;
     }
 
     /**
@@ -429,6 +440,12 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
      */
     @Override
     public double getFitness(TestSuiteChromosome suite) {
+        GraphPool graphPool = GraphPool.getInstance(classLoader);
+        BranchPool branchPool = BranchPool.getInstance(classLoader);
+
+        Map<String, RawControlFlowGraph> rawControlFlowGraphMap = graphPool.getRawCFGs(Properties.TARGET_CLASS);
+        Map<String, ActualControlFlowGraph> actualControlFlowGraphMap = graphPool.getActualCFGs(Properties.TARGET_CLASS);
+        getBranchDependencies(actualControlFlowGraphMap);
         logger.trace("Calculating branch fitness");
         double fitness = 0.0;
 
@@ -508,7 +525,7 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
                 numCoveredBranches++;
         }
 
-        //
+        // Add DC value
         for (Map.Entry<Integer, TestFitnessFunction> entry : branchCoverageTrueMap.entrySet()) {
             if (!predicateCount.containsKey(entry.getKey())) {
                 BranchCoverageTestFitness branchCoverageTestFitness = (BranchCoverageTestFitness) entry.getValue();
@@ -628,5 +645,30 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
         branchlessMethodCoverageMap = new LinkedHashMap<>();
 
         determineCoverageGoals(false);
+    }
+
+    private void getBranchDependencies(Map<String, ActualControlFlowGraph> actualControlFlowGraphMap) {
+        Map<Integer, List<ControlDependency>> nodeAndPathEdges = new HashMap<>();
+        for (String key : actualControlFlowGraphMap.keySet()
+        ) {
+            ActualControlFlowGraph actualControlFlowGraph = actualControlFlowGraphMap.get(key);
+            DefaultDirectedGraph defaultDirectedGraph = (DefaultDirectedGraph) actualControlFlowGraph.getGraph();
+            Set<ControlFlowEdge> controlFlowEdges = defaultDirectedGraph.edgeSet();
+            for (ControlFlowEdge controlFlowEdge : controlFlowEdges) {
+                ControlDependency sourceBranch = controlFlowEdge.getControlDependency();
+
+                BytecodeInstruction lastInstruction = controlFlowEdge.getTarget().getLastInstruction();
+
+                Integer targetNode = BranchPool.getInstance(classLoader).getBranchForInstruction(lastInstruction).getActualBranchId();
+
+                if (nodeAndPathEdges.containsKey(targetNode)) {
+                    nodeAndPathEdges.get(targetNode).add(sourceBranch);
+                } else {
+                    nodeAndPathEdges.put(targetNode, Collections.singletonList(sourceBranch));
+                }
+            }
+//            Set edgeSet = defaultDirectedGraph.getAllEdges(first, last);
+//            System.out.println(edgeSet.size());
+        }
     }
 }
