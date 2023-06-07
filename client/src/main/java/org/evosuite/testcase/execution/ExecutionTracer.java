@@ -596,7 +596,7 @@ public class ExecutionTracer {
                 distance_true = val1 > val2 ? (double) val1 - (double) val2 + 1.0 : 0.0;
                 distance_false = val1 <= val2 ? (double) val2 - (double) val1 + 1.0 : 0.0;
                 String content = "Branch " + branch + ": val1,val2-" + val1 + "," + val2 + ": " + distance_true + " - " + distance_false + "\n";
-                appendToFile("log.txt", content);
+//                appendToFile("log.txt", content);
                 break;
             default:
                 logger.error("Unknown opcode: " + opcode);

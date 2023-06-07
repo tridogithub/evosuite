@@ -162,8 +162,8 @@ public class ControlFlowEdge extends DefaultEdge {
         return r;
     }
 
-    public BasicBlock getTarget() {
-        return this.getTarget();
+    public BasicBlock getTargetData() {
+        return (BasicBlock) this.getTarget();
     }
 
 }

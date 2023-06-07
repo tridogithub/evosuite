@@ -41,6 +41,9 @@ import org.objectweb.asm.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -656,19 +659,64 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
             Set<ControlFlowEdge> controlFlowEdges = defaultDirectedGraph.edgeSet();
             for (ControlFlowEdge controlFlowEdge : controlFlowEdges) {
                 ControlDependency sourceBranch = controlFlowEdge.getControlDependency();
+                if (sourceBranch != null) {
+                    BytecodeInstruction lastInstruction = controlFlowEdge.getTargetData().getLastInstruction();
 
-                BytecodeInstruction lastInstruction = controlFlowEdge.getTarget().getLastInstruction();
+                    try {
+                        Branch branch = BranchPool.getInstance(classLoader).getBranchForInstruction(lastInstruction);
+                        Integer targetNode = branch.getActualBranchId();
+                        if (nodeAndPathEdges.containsKey(targetNode)) {
+                            nodeAndPathEdges.get(targetNode).add(sourceBranch);
+                        } else {
+                            nodeAndPathEdges.put(targetNode, Collections.singletonList(sourceBranch));
+                        }
+                    } catch (IllegalArgumentException e) {
+                        // When target's last instruction is not a branch
+                    }
 
-                Integer targetNode = BranchPool.getInstance(classLoader).getBranchForInstruction(lastInstruction).getActualBranchId();
-
-                if (nodeAndPathEdges.containsKey(targetNode)) {
-                    nodeAndPathEdges.get(targetNode).add(sourceBranch);
-                } else {
-                    nodeAndPathEdges.put(targetNode, Collections.singletonList(sourceBranch));
                 }
             }
-//            Set edgeSet = defaultDirectedGraph.getAllEdges(first, last);
-//            System.out.println(edgeSet.size());
+        }
+        StringBuilder sb = new StringBuilder("-------------------------------------------\nTest Suite CFG: \n");
+        nodeAndPathEdges.forEach((targetNode, controlDependencies) -> {
+            List<String> edgeSource = controlDependencies.stream()
+                    .map(cd -> cd.getBranch().getActualBranchId() + "-" + cd.getBranchExpressionValue())
+                    .collect(Collectors.toList());
+            edgeSource.forEach(es -> sb.append(targetNode + " <-- " + es + "\n"));
+        });
+        appendToFile("EdgeInfo.txt", sb.toString());
+        System.out.println(nodeAndPathEdges.size());
+    }
+
+    private static void appendToFile(String fileName, String content) {
+        BufferedWriter writer = null;
+        try {
+            File file = new File(fileName);
+
+            // Create the file if it does not exist
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            // Open the file in append mode
+            FileWriter fileWriter = new FileWriter(file, true);
+            writer = new BufferedWriter(fileWriter);
+
+            // Write content to file
+            writer.write(content);
+            writer.newLine();
+
+            System.out.println("Content appended to file successfully.");
+        } catch (IOException e) {
+            System.err.println("Error appending to file: " + e.getMessage());
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                System.err.println("Error closing file writer: " + e.getMessage());
+            }
         }
     }
 }
