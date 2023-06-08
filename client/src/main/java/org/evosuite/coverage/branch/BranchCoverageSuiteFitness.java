@@ -28,7 +28,6 @@ import org.evosuite.graphs.cfg.BytecodeInstruction;
 import org.evosuite.graphs.cfg.CFGMethodAdapter;
 import org.evosuite.graphs.cfg.ControlDependency;
 import org.evosuite.graphs.cfg.ControlFlowEdge;
-import org.evosuite.graphs.cfg.RawControlFlowGraph;
 import org.evosuite.testcase.TestChromosome;
 import org.evosuite.testcase.TestFitnessFunction;
 import org.evosuite.testcase.execution.ExecutionResult;
@@ -96,7 +95,8 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
     private final Set<Integer> removedBranchesF = new LinkedHashSet<>();
     private final Set<String> removedRootBranches = new LinkedHashSet<>();
     private Map<Integer, Double> branchDifficultyCoefficient = new HashMap<>();
-    private ClassLoader classLoader;
+    private transient BranchPool branchPool;
+    private transient GraphPool graphPool;
 
     /**
      * <p>
@@ -133,7 +133,8 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
         logger.info("Total branchless methods: " + branchlessMethodCoverageMap.size());
         logger.info("Total methods: " + totalMethods + ": " + methods);
 
-        this.classLoader = classLoader;
+        branchPool = BranchPool.getInstance(classLoader);
+        graphPool = GraphPool.getInstance(classLoader);
     }
 
     /**
@@ -443,10 +444,6 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
      */
     @Override
     public double getFitness(TestSuiteChromosome suite) {
-        GraphPool graphPool = GraphPool.getInstance(classLoader);
-        BranchPool branchPool = BranchPool.getInstance(classLoader);
-
-        Map<String, RawControlFlowGraph> rawControlFlowGraphMap = graphPool.getRawCFGs(Properties.TARGET_CLASS);
         Map<String, ActualControlFlowGraph> actualControlFlowGraphMap = graphPool.getActualCFGs(Properties.TARGET_CLASS);
         getBranchDependencies(actualControlFlowGraphMap);
         logger.trace("Calculating branch fitness");
@@ -663,7 +660,7 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
                     BytecodeInstruction lastInstruction = controlFlowEdge.getTargetData().getLastInstruction();
 
                     try {
-                        Branch branch = BranchPool.getInstance(classLoader).getBranchForInstruction(lastInstruction);
+                        Branch branch = branchPool.getBranchForInstruction(lastInstruction);
                         Integer targetNode = branch.getActualBranchId();
                         if (nodeAndPathEdges.containsKey(targetNode)) {
                             nodeAndPathEdges.get(targetNode).add(sourceBranch);
@@ -685,7 +682,6 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
             edgeSource.forEach(es -> sb.append(targetNode + " <-- " + es + "\n"));
         });
         appendToFile("EdgeInfo.txt", sb.toString());
-        System.out.println(nodeAndPathEdges.size());
     }
 
     private static void appendToFile(String fileName, String content) {
@@ -699,23 +695,20 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
             }
 
             // Open the file in append mode
-            FileWriter fileWriter = new FileWriter(file, true);
+            FileWriter fileWriter = new FileWriter(file, false);
             writer = new BufferedWriter(fileWriter);
 
             // Write content to file
             writer.write(content);
             writer.newLine();
 
-            System.out.println("Content appended to file successfully.");
         } catch (IOException e) {
-            System.err.println("Error appending to file: " + e.getMessage());
         } finally {
             try {
                 if (writer != null) {
                     writer.close();
                 }
             } catch (IOException e) {
-                System.err.println("Error closing file writer: " + e.getMessage());
             }
         }
     }
