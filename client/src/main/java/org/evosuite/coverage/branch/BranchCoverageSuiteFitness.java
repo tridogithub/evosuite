@@ -48,13 +48,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.Set;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 /**
@@ -256,34 +257,34 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
             BranchCoverageTestFitness goal = (BranchCoverageTestFitness) this.branchCoverageTrueMap.get(entry.getKey());
             assert goal != null;
             //// Author's code ////
-//            if (!trueDistance.containsKey(entry.getKey()))
-//                trueDistance.put(entry.getKey(), entry.getValue());
-//            else {
-//                trueDistance.put(entry.getKey(),
-//                        Math.min(trueDistance.get(entry.getKey()),
-//                                entry.getValue()));
-//            }
+            if (!trueDistance.containsKey(entry.getKey()))
+                trueDistance.put(entry.getKey(), entry.getValue());
+            else {
+                trueDistance.put(entry.getKey(),
+                        Math.min(trueDistance.get(entry.getKey()),
+                                entry.getValue()));
+            }
             //// Author's code ////
 
             //// New Code ////
-            int lineNumber = goal.getBranchGoal().getLineNumber();
-            if (!trueDistance.containsKey(entry.getKey())) {
-                if (branchDifficultyCoefficient.containsKey(lineNumber)) {
-                    trueDistance.put(entry.getKey(), entry.getValue() * branchDifficultyCoefficient.get(lineNumber));
-                } else {
-                    trueDistance.put(entry.getKey(), entry.getValue());
-                }
-            } else {
-                if (branchDifficultyCoefficient.containsKey(lineNumber)) {
-                    trueDistance.put(entry.getKey(), Math.min(trueDistance.get(entry.getKey()), entry.getValue())
-                            * branchDifficultyCoefficient.get(lineNumber)
-                    );
-                } else {
-                    trueDistance.put(entry.getKey(),
-                            Math.min(trueDistance.get(entry.getKey()),
-                                    entry.getValue()));
-                }
-            }
+//            int lineNumber = goal.getBranchGoal().getLineNumber();
+//            if (!trueDistance.containsKey(entry.getKey())) {
+//                if (branchDifficultyCoefficient.containsKey(lineNumber)) {
+//                    trueDistance.put(entry.getKey(), entry.getValue() * branchDifficultyCoefficient.get(lineNumber));
+//                } else {
+//                    trueDistance.put(entry.getKey(), entry.getValue());
+//                }
+//            } else {
+//                if (branchDifficultyCoefficient.containsKey(lineNumber)) {
+//                    trueDistance.put(entry.getKey(), Math.min(trueDistance.get(entry.getKey()), entry.getValue())
+//                            * branchDifficultyCoefficient.get(lineNumber)
+//                    );
+//                } else {
+//                    trueDistance.put(entry.getKey(),
+//                            Math.min(trueDistance.get(entry.getKey()),
+//                                    entry.getValue()));
+//                }
+//            }
             //// New Code ////
 
             if ((Double.compare(entry.getValue(), 0.0) == 0)) {
@@ -305,32 +306,32 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
             assert goal != null;
 
             //// Author's code ////
-//            if (!falseDistance.containsKey(entry.getKey()))
-//                falseDistance.put(entry.getKey(), entry.getValue());
-//            else {
-//                falseDistance.put(entry.getKey(),
-//                        Math.min(falseDistance.get(entry.getKey()),
-//                                entry.getValue()));
-//            }
+            if (!falseDistance.containsKey(entry.getKey()))
+                falseDistance.put(entry.getKey(), entry.getValue());
+            else {
+                falseDistance.put(entry.getKey(),
+                        Math.min(falseDistance.get(entry.getKey()),
+                                entry.getValue()));
+            }
             //// Author's code ////
 
             //// New code ////
-            int lineNumber = goal.getBranchGoal().getLineNumber();
-            if (!falseDistance.containsKey(entry.getKey())) {
-                if (branchDifficultyCoefficient.containsKey(lineNumber)) {
-                    falseDistance.put(entry.getKey(), entry.getValue() * branchDifficultyCoefficient.get(lineNumber));
-                } else {
-                    falseDistance.put(entry.getKey(), entry.getValue());
-                }
-            } else {
-                if (branchDifficultyCoefficient.containsKey(lineNumber)) {
-                    falseDistance.put(entry.getKey(), Math.min(falseDistance.get(entry.getKey()), entry.getValue())
-                            * branchDifficultyCoefficient.get(lineNumber)
-                    );
-                } else {
-                    falseDistance.put(entry.getKey(), Math.min(falseDistance.get(entry.getKey()), entry.getValue()));
-                }
-            }
+//            int lineNumber = goal.getBranchGoal().getLineNumber();
+//            if (!falseDistance.containsKey(entry.getKey())) {
+//                if (branchDifficultyCoefficient.containsKey(lineNumber)) {
+//                    falseDistance.put(entry.getKey(), entry.getValue() * branchDifficultyCoefficient.get(lineNumber));
+//                } else {
+//                    falseDistance.put(entry.getKey(), entry.getValue());
+//                }
+//            } else {
+//                if (branchDifficultyCoefficient.containsKey(lineNumber)) {
+//                    falseDistance.put(entry.getKey(), Math.min(falseDistance.get(entry.getKey()), entry.getValue())
+//                            * branchDifficultyCoefficient.get(lineNumber)
+//                    );
+//                } else {
+//                    falseDistance.put(entry.getKey(), Math.min(falseDistance.get(entry.getKey()), entry.getValue()));
+//                }
+//            }
             //// New code ////
 
             if ((Double.compare(entry.getValue(), 0.0) == 0)) {
@@ -445,7 +446,8 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
     @Override
     public double getFitness(TestSuiteChromosome suite) {
         Map<String, ActualControlFlowGraph> actualControlFlowGraphMap = graphPool.getActualCFGs(Properties.TARGET_CLASS);
-        getBranchDependencies(actualControlFlowGraphMap);
+        Map<Integer, List<ControlDependency>> nodeAndPathMap = getBranchDependencies(actualControlFlowGraphMap);
+
         logger.trace("Calculating branch fitness");
         double fitness = 0.0;
 
@@ -493,23 +495,24 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
 
             if (trueDistance.containsKey(key)) {
 //                dt = trueDistance.get(key);
-                if (!this.toRemoveBranchesT.contains(key) && Properties.PROPOSED_DC) {
-                    Integer lineNumber = trueBranchIdAndLineNumberMap.get(key);
-                    double dc = Optional.ofNullable(branchDifficultyCoefficient.get(lineNumber)).orElse(1d);
-                    dt = trueDistance.get(key) * dc;
-                } else {
-                    dt = trueDistance.get(key);
-                }
+//                if (!this.toRemoveBranchesT.contains(key) && Properties.PROPOSED_DC) {
+//                    // Branch is not covered
+//                    Integer lineNumber = trueBranchIdAndLineNumberMap.get(key);
+//                    double dc = Optional.ofNullable(branchDifficultyCoefficient.get(lineNumber)).orElse(1d);
+//                    dt = trueDistance.get(key) * dc;
+//                } else {
+                dt = trueDistance.get(key);
+//                }
             }
             if (falseDistance.containsKey(key)) {
 //                df = falseDistance.get(key);
-                if (!this.toRemoveBranchesF.contains(key) && Properties.PROPOSED_DC) {
-                    Integer lineNumber = falseBranchIdAndLineNumberMap.get(key);
-                    double dc = Optional.ofNullable(branchDifficultyCoefficient.get(lineNumber)).orElse(1d);
-                    df = falseDistance.get(key) * dc;
-                } else {
-                    df = falseDistance.get(key);
-                }
+//                if (!this.toRemoveBranchesF.contains(key) && Properties.PROPOSED_DC) {
+//                    Integer lineNumber = falseBranchIdAndLineNumberMap.get(key);
+//                    double dc = Optional.ofNullable(branchDifficultyCoefficient.get(lineNumber)).orElse(1d);
+//                    df = falseDistance.get(key) * dc;
+//                } else {
+                df = falseDistance.get(key);
+//                }
             }
             // If the branch predicate was only executed once, then add 1
             if (numExecuted == 1) {
@@ -526,10 +529,29 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
         }
 
         // Add DC value
+//        for (Map.Entry<Integer, TestFitnessFunction> entry : branchCoverageTrueMap.entrySet()) {
+//            if (!predicateCount.containsKey(entry.getKey())) {
+//                BranchCoverageTestFitness branchCoverageTestFitness = (BranchCoverageTestFitness) entry.getValue();
+//                int lineNumber = branchCoverageTestFitness.getBranchGoal().getLineNumber();
+//                Double dcValue = branchDifficultyCoefficient.get(lineNumber);
+//                fitness += dcValue != null ? dcValue.doubleValue() : 0.0;
+//            }
+//        }
+
+        // Get node to active DC value (all node belongs to the path lead to uncovered node)
+        Set<Integer> setOfDCNode = new HashSet<>();
         for (Map.Entry<Integer, TestFitnessFunction> entry : branchCoverageTrueMap.entrySet()) {
-            if (!predicateCount.containsKey(entry.getKey())) {
-                BranchCoverageTestFitness branchCoverageTestFitness = (BranchCoverageTestFitness) entry.getValue();
-                int lineNumber = branchCoverageTestFitness.getBranchGoal().getLineNumber();
+            if (!predicateCount.containsKey(entry.getKey()) && nodeAndPathMap.containsKey(entry.getKey())) {
+                Set<Integer> allPathNodes = getAllPathNodes(entry.getKey(), nodeAndPathMap);
+                setOfDCNode.addAll(allPathNodes);
+            }
+        }
+        String activeDCNodes = setOfDCNode.stream().map(i -> String.valueOf(i)).collect(Collectors.joining(", "));
+        appendToFile("ActiveDCNode.txt", activeDCNodes);
+        for (Integer integer : setOfDCNode) {
+            Branch branch = branchPool.getBranch(integer);
+            if (branch != null) {
+                int lineNumber = branch.getInstruction().getLineNumber();
                 Double dcValue = branchDifficultyCoefficient.get(lineNumber);
                 fitness += dcValue != null ? dcValue.doubleValue() : 0.0;
             }
@@ -647,7 +669,7 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
         determineCoverageGoals(false);
     }
 
-    private void getBranchDependencies(Map<String, ActualControlFlowGraph> actualControlFlowGraphMap) {
+    private Map<Integer, List<ControlDependency>> getBranchDependencies(Map<String, ActualControlFlowGraph> actualControlFlowGraphMap) {
         Map<Integer, List<ControlDependency>> nodeAndPathEdges = new HashMap<>();
         for (String key : actualControlFlowGraphMap.keySet()
         ) {
@@ -682,6 +704,28 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
             edgeSource.forEach(es -> sb.append(targetNode + " <-- " + es + "\n"));
         });
         appendToFile("EdgeInfo.txt", sb.toString());
+        return nodeAndPathEdges;
+    }
+
+
+    private Set<Integer> getAllPathNodes(Integer key, Map<Integer, List<ControlDependency>> nodeAndPathMap) {
+        Set<Integer> results = new HashSet<>();
+
+        Stack<Integer> stack = new Stack<>();
+        stack.push(key);
+        while (!stack.isEmpty()) {
+            Integer pop = stack.pop();
+            results.add(pop);
+
+            if (nodeAndPathMap.containsKey(pop)) {
+                List<ControlDependency> dependentNodes = nodeAndPathMap.get(pop);
+                Set<Integer> appendList = dependentNodes.stream().map(cd -> cd.getBranch().getActualBranchId())
+                        .filter(node -> !stack.contains(node))
+                        .collect(Collectors.toSet());
+                stack.addAll(appendList);
+            }
+        }
+        return results;
     }
 
     private static void appendToFile(String fileName, String content) {
@@ -695,7 +739,7 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
             }
 
             // Open the file in append mode
-            FileWriter fileWriter = new FileWriter(file, false);
+            FileWriter fileWriter = new FileWriter(file, true);
             writer = new BufferedWriter(fileWriter);
 
             // Write content to file
