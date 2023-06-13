@@ -2660,7 +2660,7 @@ public class Properties {
 
     public static Map<Integer, Double> DIFFICULTY_EFFICIENT_ARRAY = new HashMap<>();
 
-    public final static Map<Integer, Double> SAKTI_NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>(){
+    public final static Map<Integer, Double> SAKTI_NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
         {
             //[0-100][0-100][0-10000]
 //            put(30, 77.66);
@@ -2793,5 +2793,13 @@ public class Properties {
     };
     public static Map<Integer, Double> SAKTI_DIFFICULTY_EFFICIENT_ARRAY = new HashMap<>();
     public static boolean SAKTI_DC = false;
+    @Parameter(key = "proposed_dc", group = "Runtime", description = "")
     public static boolean PROPOSED_DC = false;
+    @Parameter(key = "next_date_dc", group = "Runtime", description = "")
+    public static boolean NEXT_DATE_DC = false;
+    @Parameter(key = "valid_date_dc", group = "Runtime", description = "")
+    public static boolean VALID_DATE_DC = false;
+    @Parameter(key = "add_date_dc", group = "Runtime", description = "")
+    public static boolean ADD_DATE_DC = false;
+
 }

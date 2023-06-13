@@ -46,7 +46,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -468,7 +468,15 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
         Map<Integer, Integer> predicateCount = new LinkedHashMap<>();
         Map<String, Integer> callCount = new LinkedHashMap<>();
         if (Properties.PROPOSED_DC) {
-            branchDifficultyCoefficient = Properties.DIFFICULTY_EFFICIENT_ARRAY;
+            if (Properties.NEXT_DATE_DC) {
+                branchDifficultyCoefficient = Properties.NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.VALID_DATE_DC) {
+                branchDifficultyCoefficient = Properties.VALID_DATE_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.ADD_DATE_DC) {
+                branchDifficultyCoefficient = Properties.ADD_DATE_DIFFICULTY_COEFFICIENT_MAP;
+            } else {
+                branchDifficultyCoefficient = new HashMap<>();
+            }
         }
         if (Properties.SAKTI_DC) {
             branchDifficultyCoefficient = Properties.SAKTI_DIFFICULTY_EFFICIENT_ARRAY;
@@ -687,7 +695,8 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
                         if (nodeAndPathEdges.containsKey(targetNode)) {
                             nodeAndPathEdges.get(targetNode).add(sourceBranch);
                         } else {
-                            nodeAndPathEdges.put(targetNode, Collections.singletonList(sourceBranch));
+                            nodeAndPathEdges.put(targetNode, new ArrayList<>());
+                            nodeAndPathEdges.get(targetNode).add(sourceBranch);
                         }
                     } catch (IllegalArgumentException e) {
                         // When target's last instruction is not a branch
