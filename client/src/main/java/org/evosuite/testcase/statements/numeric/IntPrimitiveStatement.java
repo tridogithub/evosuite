@@ -137,12 +137,12 @@ public class IntPrimitiveStatement extends NumericalPrimitiveStatement<Integer> 
     }
 
     public void randomizeArg0() {
-        if (Randomness.nextDouble() >= Properties.PRIMITIVE_POOL) {
-            value = Randomness.nextInt(-1, 1);
-        } else {
-            ConstantPool constantPool = ConstantPoolManager.getInstance().getConstantPool();
-            value = constantPool.getRandomInt();
-        }
+//        if (Randomness.nextDouble() >= Properties.PRIMITIVE_POOL) {
+            value = Randomness.nextInt(-10, 11);
+//        } else {
+//            ConstantPool constantPool = ConstantPoolManager.getInstance().getConstantPool();
+//            value = constantPool.getRandomInt();
+//        }
     }
 
     /* (non-Javadoc)

@@ -474,6 +474,12 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
                 branchDifficultyCoefficient = Properties.VALID_DATE_DIFFICULTY_COEFFICIENT_MAP;
             } else if (Properties.ADD_DATE_DC) {
                 branchDifficultyCoefficient = Properties.ADD_DATE_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.GAMMQ_DC) {
+                branchDifficultyCoefficient = Properties.GAMMA_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.BESSJ_DC) {
+                branchDifficultyCoefficient = Properties.BESSJ_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.EXPINT_DC) {
+                branchDifficultyCoefficient = Properties.EXPINT_DIFFICULTY_COEFFICIENT_MAP;
             } else {
                 branchDifficultyCoefficient = new HashMap<>();
             }
@@ -536,32 +542,34 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
                 numCoveredBranches++;
         }
 
-        // Add DC value
-//        for (Map.Entry<Integer, TestFitnessFunction> entry : branchCoverageTrueMap.entrySet()) {
-//            if (!predicateCount.containsKey(entry.getKey())) {
-//                BranchCoverageTestFitness branchCoverageTestFitness = (BranchCoverageTestFitness) entry.getValue();
-//                int lineNumber = branchCoverageTestFitness.getBranchGoal().getLineNumber();
-//                Double dcValue = branchDifficultyCoefficient.get(lineNumber);
-//                fitness += dcValue != null ? dcValue.doubleValue() : 0.0;
+        if (Properties.PROPOSED_DC) {
+            // Add DC value
+//            for (Map.Entry<Integer, TestFitnessFunction> entry : branchCoverageTrueMap.entrySet()) {
+//                if (!predicateCount.containsKey(entry.getKey())) {
+//                    BranchCoverageTestFitness branchCoverageTestFitness = (BranchCoverageTestFitness) entry.getValue();
+//                    int lineNumber = branchCoverageTestFitness.getBranchGoal().getLineNumber();
+//                    Double dcValue = branchDifficultyCoefficient.get(lineNumber);
+//                    fitness += dcValue != null ? dcValue.doubleValue() : 0.0;
+//                }
 //            }
-//        }
 
-        // Get node to active DC value (all node belongs to the path lead to uncovered node)
-        Set<Integer> setOfDCNode = new HashSet<>();
-        for (Map.Entry<Integer, TestFitnessFunction> entry : branchCoverageTrueMap.entrySet()) {
-            if (!predicateCount.containsKey(entry.getKey()) && nodeAndPathMap.containsKey(entry.getKey())) {
-                Set<Integer> allPathNodes = getAllPathNodes(entry.getKey(), nodeAndPathMap);
-                setOfDCNode.addAll(allPathNodes);
+            // Get node to active DC value (all node belongs to the path lead to uncovered node)
+            Set<Integer> setOfDCNode = new HashSet<>();
+            for (Map.Entry<Integer, TestFitnessFunction> entry : branchCoverageTrueMap.entrySet()) {
+                if (!predicateCount.containsKey(entry.getKey()) && nodeAndPathMap.containsKey(entry.getKey())) {
+                    Set<Integer> allPathNodes = getAllPathNodes(entry.getKey(), nodeAndPathMap);
+                    setOfDCNode.addAll(allPathNodes);
+                }
             }
-        }
-        String activeDCNodes = setOfDCNode.stream().map(i -> String.valueOf(i)).collect(Collectors.joining(", "));
-        appendToFile("ActiveDCNode.txt", activeDCNodes);
-        for (Integer integer : setOfDCNode) {
-            Branch branch = branchPool.getBranch(integer);
-            if (branch != null) {
-                int lineNumber = branch.getInstruction().getLineNumber();
-                Double dcValue = branchDifficultyCoefficient.get(lineNumber);
-                fitness += dcValue != null ? dcValue.doubleValue() : 0.0;
+            String activeDCNodes = setOfDCNode.stream().map(i -> String.valueOf(i)).collect(Collectors.joining(", "));
+            appendToFile("ActiveDCNode.txt", activeDCNodes);
+            for (Integer integer : setOfDCNode) {
+                Branch branch = branchPool.getBranch(integer);
+                if (branch != null) {
+                    int lineNumber = branch.getInstruction().getLineNumber();
+                    Double dcValue = branchDifficultyCoefficient.get(lineNumber);
+                    fitness += dcValue != null ? dcValue.doubleValue() : 0.0;
+                }
             }
         }
 

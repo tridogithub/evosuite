@@ -138,7 +138,7 @@ public class SystemTestBase {
         long seed = new GregorianCalendar().get(Calendar.MONTH);
 //		long seed = getSeed();
 // Modified
-        Randomness.setSeed(seed);
+//        Randomness.setSeed(seed);
 // Modified
         currentProperties = (java.util.Properties) System.getProperties().clone();
 

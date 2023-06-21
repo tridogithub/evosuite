@@ -19,8 +19,9 @@
  */
 package org.evosuite.basic;
 
-import com.examples.with.different.packagename.Add;
-import com.examples.with.different.packagename.NextDate;
+import com.examples.with.different.packagename.GECCO.Bessj;
+import com.examples.with.different.packagename.GECCO.Expint;
+import com.examples.with.different.packagename.GECCO.Gammq;
 import org.evosuite.EvoSuite;
 import org.evosuite.Properties;
 import org.evosuite.SystemTestBase;
@@ -32,23 +33,24 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NullStringSystemTest extends SystemTestBase {
 
     @Test
     public void testNullString() {
         List<Double> coverageList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 20; i++) {
             EvoSuite evosuite = new EvoSuite();
 
 //        String targetClass = Triangle.class.getCanonicalName();
 //            String targetClass = NextDate.class.getCanonicalName();
 //        String targetClass = NextDateOrigin.class.getCanonicalName();
 //        String targetClass = DayOfWeek.class.getCanonicalName();
-        String targetClass = Add.class.getCanonicalName();
+//        String targetClass = Add.class.getCanonicalName();
 //        String targetClass = AddOrigin.class.getCanonicalName();
-//        String targetClass = ValidDate.class.getCanonicalName();
-//        String targetClass = ValidDateOrigin.class.getCanonicalName();
+//        String targetClass = ValidDate.clas   s.getCanonicalName();
+//        String targetClass = ValidDateOrqigin.class.getCanonicalName();
 //        String targetClass = Example.class.getCanonicalName();
 //        String targetClass = TreeSet.class.getCanonicalName();
 //        String targetClass = NextDateOriginal.class.getCanonicalName();
@@ -56,14 +58,19 @@ public class NullStringSystemTest extends SystemTestBase {
 //        String targetClass = Triangle.class.getCanonicalName();
 
 //        String targetClass = Bessj.class.getCanonicalName();
-//        String targetClass = Expint.class.getCanonicalName();
+        String targetClass = Expint.class.getCanonicalName();
 //        String targetClass = Gammq.class.getCanonicalName();
 //        String targetClass = EI.class.getCanonicalName();
 //        System.out.println(targetClass);
 
+            Properties.REDUCE_SPACE = true;
             Properties.PROPOSED_DC = true;
+//            Properties.BESSJ_DC = true;
+//            Properties.GAMMQ_DC = true;
+            Properties.EXPINT_DC = true;
 //            Properties.NEXT_DATE_DC = true;
-            Properties.ADD_DATE_DC = true;
+//            Properties.VALID_DATE_DC = true;
+//            Properties.ADD_DATE_DC = true;
 //            Properties.DIFFICULTY_EFFICIENT_ARRAY = Properties.NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP;
 //        Properties.DIFFICULTY_EFFICIENT_ARRAY = Properties.VALID_DATE_DIFFICULTY_COEFFICIENT_MAP;
 //        Properties.DIFFICULTY_EFFICIENT_ARRAY = Properties.ADD_DATE_DIFFICULTY_COEFFICIENT_MAP;
@@ -100,6 +107,7 @@ public class NullStringSystemTest extends SystemTestBase {
 //        Assert.assertEquals("Non-optimal coverage: ", 1d, best.getCoverage(), 0.001);
             setDefaultPropertiesForTestCases();
         }
+        System.out.println(coverageList.stream().map(value -> String.valueOf(value)).collect(Collectors.joining(", ")));
         System.out.println(String.format("Average coverage with %s times tried: %s",
                 coverageList.size(), coverageList.stream().mapToDouble(value -> value.doubleValue()).sum() / coverageList.size()));
     }

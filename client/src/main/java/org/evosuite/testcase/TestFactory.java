@@ -813,7 +813,7 @@ public class TestFactory {
                                     || "Expint".equalsIgnoreCase(klass.getSimpleName())
                                     || "Gammq".equalsIgnoreCase(klass.getSimpleName())
                                     || "Bessj".equalsIgnoreCase(klass.getSimpleName())
-                    )
+                    ) && Properties.REDUCE_SPACE
             ) {
                 return createPrimitiveNextDate(test, clazz, position, recursionDepth, parameter, methodName);
             } else {
@@ -1253,12 +1253,10 @@ public class TestFactory {
                     || "setCurrentYear".equalsIgnoreCase(methodName)
             ) {
                 intPrimitiveStatement.randomizeYear(methodName);
-            }
-            else if (parameter.getName().equalsIgnoreCase("arg0") &&
+            } else if (parameter.getName().equalsIgnoreCase("arg0") &&
                     (
                             "bessj".equals(methodName)
                                     || "expint".equals(methodName)
-                                    || "gammq".equals(methodName)
                     )
             ) {
                 intPrimitiveStatement.randomizeArg0();
@@ -1266,7 +1264,7 @@ public class TestFactory {
             VariableReference ret = test.addStatement(intPrimitiveStatement, position);
             ret.setDistance(recursionDepth);
             return ret;
-        } else if(st instanceof DoublePrimitiveStatement && parameter != null){
+        } else if (st instanceof DoublePrimitiveStatement && parameter != null) {
             DoublePrimitiveStatement doublePrimitiveStatement = (DoublePrimitiveStatement) st;
             if (parameter.getName().equalsIgnoreCase("arg0") &&
                     (
@@ -1276,8 +1274,7 @@ public class TestFactory {
                     )
             ) {
                 doublePrimitiveStatement.randomizeArg0();
-            }
-            else if (parameter.getName().equalsIgnoreCase("arg1") &&
+            } else if (parameter.getName().equalsIgnoreCase("arg1") &&
                     (
                             "bessj".equals(methodName)
                                     || "expint".equals(methodName)

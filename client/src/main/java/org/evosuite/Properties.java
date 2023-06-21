@@ -2658,6 +2658,41 @@ public class Properties {
         }
     };
 
+    public final static Map<Integer, Double> GAMMA_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(12, 4.0);
+            put(15, 4.0);
+            put(17, 4.21);
+        }
+    };
+
+    public final static Map<Integer, Double> BESSJ_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(19, 2.75);
+            put(23, 203.33);
+            put(25, 3.58);
+            put(35, 7.35);
+
+            put(64, 4.03);
+            put(71, 7.11);
+            put(88, 4.03);
+            put(95, 7.11);
+        }
+    };
+
+    public final static Map<Integer, Double> EXPINT_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(19, 3.899);
+            put(21, 4.34);
+            put(22, 23.01);
+            put(24, 4.34);
+            put(25, 203.33);
+            put(27, 4.34);
+            put(28, 4.56);
+            put(46, 22.43);
+        }
+    };
+
     public static Map<Integer, Double> DIFFICULTY_EFFICIENT_ARRAY = new HashMap<>();
 
     public final static Map<Integer, Double> SAKTI_NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
@@ -2792,6 +2827,7 @@ public class Properties {
         }
     };
     public static Map<Integer, Double> SAKTI_DIFFICULTY_EFFICIENT_ARRAY = new HashMap<>();
+    public static boolean REDUCE_SPACE = false;
     public static boolean SAKTI_DC = false;
     @Parameter(key = "proposed_dc", group = "Runtime", description = "")
     public static boolean PROPOSED_DC = false;
@@ -2801,5 +2837,11 @@ public class Properties {
     public static boolean VALID_DATE_DC = false;
     @Parameter(key = "add_date_dc", group = "Runtime", description = "")
     public static boolean ADD_DATE_DC = false;
+    @Parameter(key = "bessj_dc", group = "Runtime", description = "")
+    public static boolean BESSJ_DC = false;
+    @Parameter(key = "gammq_dc", group = "Runtime", description = "")
+    public static boolean GAMMQ_DC = false;
+    @Parameter(key = "expint_dc", group = "Runtime", description = "")
+    public static boolean EXPINT_DC = false;
 
 }
