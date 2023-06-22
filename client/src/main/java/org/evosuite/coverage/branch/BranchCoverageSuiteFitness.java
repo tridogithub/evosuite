@@ -467,26 +467,9 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
         Map<Integer, Double> falseDistance = new LinkedHashMap<>();
         Map<Integer, Integer> predicateCount = new LinkedHashMap<>();
         Map<String, Integer> callCount = new LinkedHashMap<>();
-        if (Properties.PROPOSED_DC) {
-            if (Properties.NEXT_DATE_DC) {
-                branchDifficultyCoefficient = Properties.NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP;
-            } else if (Properties.VALID_DATE_DC) {
-                branchDifficultyCoefficient = Properties.VALID_DATE_DIFFICULTY_COEFFICIENT_MAP;
-            } else if (Properties.ADD_DATE_DC) {
-                branchDifficultyCoefficient = Properties.ADD_DATE_DIFFICULTY_COEFFICIENT_MAP;
-            } else if (Properties.GAMMQ_DC) {
-                branchDifficultyCoefficient = Properties.GAMMA_DIFFICULTY_COEFFICIENT_MAP;
-            } else if (Properties.BESSJ_DC) {
-                branchDifficultyCoefficient = Properties.BESSJ_DIFFICULTY_COEFFICIENT_MAP;
-            } else if (Properties.EXPINT_DC) {
-                branchDifficultyCoefficient = Properties.EXPINT_DIFFICULTY_COEFFICIENT_MAP;
-            } else {
-                branchDifficultyCoefficient = new HashMap<>();
-            }
-        }
-        if (Properties.SAKTI_DC) {
-            branchDifficultyCoefficient = Properties.SAKTI_DIFFICULTY_EFFICIENT_ARRAY;
-        }
+
+        // Set up branch DC
+        setupBranchDC();
 
         // Collect stats in the traces
         boolean hasTimeoutOrTestException = analyzeTraces(suite, results, predicateCount,
@@ -542,7 +525,7 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
                 numCoveredBranches++;
         }
 
-        if (Properties.PROPOSED_DC) {
+        if (Properties.PROPOSED_DC || Properties.SAKTI_DC) {
             // Add DC value
 //            for (Map.Entry<Integer, TestFitnessFunction> entry : branchCoverageTrueMap.entrySet()) {
 //                if (!predicateCount.containsKey(entry.getKey())) {
@@ -770,6 +753,43 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
                     writer.close();
                 }
             } catch (IOException e) {
+            }
+        }
+    }
+
+    private void setupBranchDC() {
+        if (Properties.PROPOSED_DC) {
+            if (Properties.NEXT_DATE_DC) {
+                branchDifficultyCoefficient = Properties.NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.VALID_DATE_DC) {
+                branchDifficultyCoefficient = Properties.VALID_DATE_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.ADD_DATE_DC) {
+                branchDifficultyCoefficient = Properties.ADD_DATE_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.GAMMQ_DC) {
+                branchDifficultyCoefficient = Properties.GAMMQ_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.BESSJ_DC) {
+                branchDifficultyCoefficient = Properties.BESSJ_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.EXPINT_DC) {
+                branchDifficultyCoefficient = Properties.EXPINT_DIFFICULTY_COEFFICIENT_MAP;
+            } else {
+                branchDifficultyCoefficient = new HashMap<>();
+            }
+        }
+        if (Properties.SAKTI_DC) {
+            if (Properties.NEXT_DATE_DC) {
+                branchDifficultyCoefficient = Properties.SAKTI_NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.VALID_DATE_DC) {
+                branchDifficultyCoefficient = Properties.SAKTI_VALID_DATE_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.ADD_DATE_DC) {
+                branchDifficultyCoefficient = Properties.SAKTI_ADD_DATE_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.GAMMQ_DC) {
+                branchDifficultyCoefficient = Properties.SAKTI_GAMMQ_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.BESSJ_DC) {
+                branchDifficultyCoefficient = Properties.SAKTI_BESSJ_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.EXPINT_DC) {
+                branchDifficultyCoefficient = Properties.SAKTI_EXPINT_DIFFICULTY_COEFFICIENT_MAP;
+            } else {
+                branchDifficultyCoefficient = new HashMap<>();
             }
         }
     }

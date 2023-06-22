@@ -2658,7 +2658,7 @@ public class Properties {
         }
     };
 
-    public final static Map<Integer, Double> GAMMA_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+    public final static Map<Integer, Double> GAMMQ_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
         {
             put(12, 4.0);
             put(15, 4.0);
@@ -2692,8 +2692,6 @@ public class Properties {
             put(46, 22.43);
         }
     };
-
-    public static Map<Integer, Double> DIFFICULTY_EFFICIENT_ARRAY = new HashMap<>();
 
     public final static Map<Integer, Double> SAKTI_NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
         {
@@ -2826,7 +2824,39 @@ public class Properties {
             put(242, 8.14);
         }
     };
-    public static Map<Integer, Double> SAKTI_DIFFICULTY_EFFICIENT_ARRAY = new HashMap<>();
+
+    public final static Map<Integer, Double> SAKTI_BESSJ_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(19, 105.28);
+            put(23, 110.95);
+            put(25, 103.03);
+            put(35, 109.0);
+            put(64, 105.12);
+            put(71, 108.91);
+            put(88, 105.21);
+            put(95, 108.91);
+        }
+    };
+    public final static Map<Integer, Double> SAKTI_GAMMQ_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(12, 60.95);
+            put(15, 106.02);
+            put(17, 106.47);
+        }
+    };
+    public final static Map<Integer, Double> SAKTI_EXPINT_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(19, 58.12);
+            put(21, 58.86);
+            put(22, 110.52);
+            put(24, 106.71);
+            put(25, 110.95);
+            put(27, 106.02);
+            put(28, 106.52);
+            put(46, 110.50);
+        }
+    };
+
     public static boolean REDUCE_SPACE = false;
     public static boolean SAKTI_DC = false;
     @Parameter(key = "proposed_dc", group = "Runtime", description = "")
