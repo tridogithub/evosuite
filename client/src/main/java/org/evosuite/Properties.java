@@ -2528,29 +2528,6 @@ public class Properties {
      */
     public final static Map<Integer, Double> NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
         {
-            //[0-100][0-100][0-10000]
-//            put(30, 8.13);
-//            put(41, 21.31);
-//            put(42, 21.41);
-//            put(44, 119.05);
-//            put(50, 29.73);
-//            put(51, 29.95);
-//            put(53, 76.97);
-//            put(54, 127.47);
-//            put(57, 127.47);
-//            put(62, 105.48);
-//            put(63, 105.48);
-////            put(65, 147.92);
-//            put(73, 105.48);
-//            put(74, 105.96);
-//            put(76, 127.47);
-//            put(77, 203.21);
-//            put(78, 206.88);
-//            put(80, 203.62);
-//            put(84, 203.21);
-//            put(85, 206.88);
-//            put(88, 203.62);
-//            put(90, 152.72);
             put(30, 2757.5);
             put(41, 4.4);
             put(42, 4.43);
@@ -2578,18 +2555,6 @@ public class Properties {
 
     public final static Map<Integer, Double> VALID_DATE_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
         {
-            //[0-100][0-100][0-10000]
-//            put(31, 7.55);
-//            put(34, 3.35);
-//            put(36, 11.07);
-//            put(41, 105.47);
-//            put(42, 109.13);
-////            put(43, 19.13);
-//            put(44, 105.88);
-////            put(45, 16.51);
-//            put(52, 29.72);
-////            put(54, 5.6);
-
             put(31, 4103.0);
             put(34, 9.0);
             put(36, 18.67);
@@ -2605,32 +2570,6 @@ public class Properties {
 
     public final static Map<Integer, Double> ADD_DATE_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
         {
-            //[0-100][0-100][0-10000]
-//            put(62, 5.0);
-//            put(64, 5.0);
-//            put(67, 10005.0);
-//            put(74, 5.0);
-//            put(76, 5.0);
-//            put(79, 10005.0);
-//            put(93, 4.07);
-////            put(95, 18.0);
-//            put(99, 4.0);
-//            put(101, 5.0);
-//            put(104, 10005.0);
-//            put(111, 4.0);
-//            put(113, 5.0);
-//            put(116, 10005.0);
-//            put(126, 4.0);
-////            put(129, 18.0);
-////            put(132, 18.0);
-//
-//            put(224, 3.35);
-//            put(226, 11.07);
-//            put(231, 105.47);
-//            put(232, 109.13);
-//            put(234, 105.88);
-//            put(242, 29.72);
-
             put(62, 5.0);
             put(64, 5.0);
 //            put(67, 10005.0);
@@ -2693,32 +2632,56 @@ public class Properties {
         }
     };
 
+    public final static Map<Integer, Double> BESSI_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(15, 2.75);
+            put(16, 202.0);
+            put(18, 2.0);
+            put(45, 2.28);
+            put(51, 5.56);
+        }
+    };
+
+    public final static Map<Integer, Double> EI_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(17, 1.99);
+            put(18, 1.99);
+            put(19, 2.79);
+            put(30, 7.17);
+        }
+    };
+
+    public final static Map<Integer, Double> PLGNDR_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(13, 3.11);
+            put(16, 4.1);
+            put(24, 3.0);
+            put(26, 3.0);
+            put(28, 3.1);
+            put(30, 3.0);
+        }
+    };
+
+    public final static Map<Integer, Double> BETAI_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(15, 3.05);
+            put(18, 102.5);
+            put(29, 24.33);
+            put(21, 20.27);
+            put(23, 20.27);
+        }
+    };
+
+     public final static Map<Integer, Double> RC_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(25, 2.0);
+            put(28, 4.0);
+            put(32, 4.0);
+        }
+    };
+
     public final static Map<Integer, Double> SAKTI_NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
         {
-            //[0-100][0-100][0-10000]
-//            put(30, 77.66);
-//            put(41, 19.06);
-//            put(42, 21.41);
-//            put(44, 19.49);
-//            put(50, 27.48);
-//            put(51, 29.95);
-//            put(53, 27.89);
-//            put(54, 127.46);
-//            put(57, 27.91);
-//            put(62, 103.22);
-//            put(63, 105.47);
-//            put(65, 103.68);
-//            put(73, 105.37);
-//            put(74, 105.96);
-//            put(76, 106.60);
-//            put(77, 203.21);
-//            put(78, 8.95);
-//            put(80, 4.85);
-//            put(84, 203.21);
-//            put(85, 8.95);
-//            put(88, 4.85);
-//            put(90, 103.64);
-
             put(30, 77.66);
             put(41, 6.714);
             put(42, 1.9);
@@ -2745,18 +2708,6 @@ public class Properties {
     };
     public final static Map<Integer, Double> SAKTI_VALID_DATE_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
         {
-            //[0-100][0-100][0-10000]
-//            put(31, 109.19);
-//            put(34, 102.18);
-//            put(36, 104.06);
-//            put(41, 110.9);
-//            put(42, 108.95);
-////            put(43, 19.13);
-//            put(44, 104.84);
-////            put(45, 16.51);
-//            put(52, 110.60);
-////            put(54, 5.6);
-
             put(31, 10.99);
             put(34, 9.57);
             put(36, 10.39);
@@ -2772,32 +2723,6 @@ public class Properties {
 
     public final static Map<Integer, Double> SAKTI_ADD_DATE_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
         {
-            //[0-100][0-100][0-10000]
-//            put(62, 106.0);
-//            put(64, 101.0);
-//            put(67, 110.99);
-//            put(74, 106.0);
-//            put(76, 101.0);
-//            put(79, 110.99);
-//            put(93, 101.0);
-//            put(95, 111.0);
-//            put(99, 106.0);
-//            put(101, 101.0);
-//            put(104, 110.99);
-//            put(111, 106.0);
-//            put(113, 101.0);
-//            put(116, 110.99);
-//            put(126, 101.0);
-//            put(129, 111.0);
-////            put(132, 18.0);
-//
-//            put(224, 102.18);
-//            put(226, 104.06);
-//            put(231, 110.9);
-//            put(232, 108.95);
-//            put(234, 104.84);
-//            put(242, 110.60);
-
             put(62, 106.0);
             put(64, 101.0);
             put(67, 111.0);
@@ -2857,6 +2782,55 @@ public class Properties {
         }
     };
 
+
+    public final static Map<Integer, Double> SAKTI_BESSI_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(15, 2.75);
+            put(16, 202.0);
+            put(18, 2.0);
+            put(45, 2.28);
+            put(51, 5.56);
+        }
+    };
+
+    public final static Map<Integer, Double> SAKTI_EI_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(17, 1.99);
+            put(18, 1.99);
+            put(19, 2.79);
+            put(30, 7.17);
+        }
+    };
+
+    public final static Map<Integer, Double> SAKTI_PLGNDR_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(13, 3.11);
+            put(16, 4.1);
+            put(24, 3.0);
+            put(26, 3.0);
+            put(28, 3.1);
+            put(30, 3.0);
+        }
+    };
+
+    public final static Map<Integer, Double> SAKTI_BETAI_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(15, 3.05);
+            put(18, 102.5);
+            put(29, 24.33);
+            put(21, 20.27);
+            put(23, 20.27);
+        }
+    };
+
+    public final static Map<Integer, Double> SAKTI_RC_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
+        {
+            put(25, 2.0);
+            put(28, 4.0);
+            put(32, 4.0);
+        }
+    };
+    public static Map<Integer, Double> SAKTI_DIFFICULTY_EFFICIENT_ARRAY = new HashMap<>();
     public static boolean REDUCE_SPACE = false;
     public static boolean SAKTI_DC = false;
     @Parameter(key = "proposed_dc", group = "Runtime", description = "")
@@ -2873,5 +2847,17 @@ public class Properties {
     public static boolean GAMMQ_DC = false;
     @Parameter(key = "expint_dc", group = "Runtime", description = "")
     public static boolean EXPINT_DC = false;
+
+    @Parameter(key = "bessi_dc", group = "Runtime", description = "")
+    public static boolean BESSI_DC = false;
+    @Parameter(key = "ei_dc", group = "Runtime", description = "")
+    public static boolean EI_DC = false;
+    @Parameter(key = "plgndr_dc", group = "Runtime", description = "")
+    public static boolean PLGNDR_DC = false;
+    @Parameter(key = "betai_dc", group = "Runtime", description = "")
+    public static boolean BETAI_DC = false;
+    @Parameter(key = "rc_dc", group = "Runtime", description = "")
+    public static boolean RC_DC = false;
+
 
 }

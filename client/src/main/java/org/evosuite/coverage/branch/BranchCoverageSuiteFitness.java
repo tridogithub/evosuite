@@ -771,6 +771,16 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
                 branchDifficultyCoefficient = Properties.BESSJ_DIFFICULTY_COEFFICIENT_MAP;
             } else if (Properties.EXPINT_DC) {
                 branchDifficultyCoefficient = Properties.EXPINT_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.BESSI_DC) {
+                branchDifficultyCoefficient = Properties.BESSI_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.EI_DC) {
+                branchDifficultyCoefficient = Properties.EI_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.PLGNDR_DC) {
+                branchDifficultyCoefficient = Properties.PLGNDR_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.BETAI_DC) {
+                branchDifficultyCoefficient = Properties.BETAI_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.RC_DC) {
+                branchDifficultyCoefficient = Properties.RC_DIFFICULTY_COEFFICIENT_MAP;
             } else {
                 branchDifficultyCoefficient = new HashMap<>();
             }
@@ -788,6 +798,16 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
                 branchDifficultyCoefficient = Properties.SAKTI_BESSJ_DIFFICULTY_COEFFICIENT_MAP;
             } else if (Properties.EXPINT_DC) {
                 branchDifficultyCoefficient = Properties.SAKTI_EXPINT_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.BESSI_DC) {
+                branchDifficultyCoefficient = Properties.SAKTI_BESSI_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.EI_DC) {
+                branchDifficultyCoefficient = Properties.SAKTI_EI_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.PLGNDR_DC) {
+                branchDifficultyCoefficient = Properties.SAKTI_PLGNDR_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.BETAI_DC) {
+                branchDifficultyCoefficient = Properties.SAKTI_BETAI_DIFFICULTY_COEFFICIENT_MAP;
+            } else if (Properties.RC_DC) {
+                branchDifficultyCoefficient = Properties.SAKTI_RC_DIFFICULTY_COEFFICIENT_MAP;
             } else {
                 branchDifficultyCoefficient = new HashMap<>();
             }

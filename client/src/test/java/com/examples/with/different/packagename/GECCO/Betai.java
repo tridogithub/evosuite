@@ -10,7 +10,20 @@ public class Betai {
     private final double FPMIN = 1.0e-30;
     private final double EPS = 6.0e-8;
 
-    double betacf(float a, float b, float x) {
+    public double betai(double a, double b, double x) {
+        double bt;
+        if (x < 0.0 || x > 1.0) {
+            throw new RuntimeException("Bad x in routine betai");
+        }
+        if (x == 0.0 || x == 1.0) bt = 0.0f;
+        else
+            bt = Math.exp(gammln(a + b) - gammln(a) - gammln(b) + a * Math.log(x) + b * Math.log(1.0 - x));
+        if (x < (a + 1.0) / (a + b + 2.0))
+            return bt * betacf(a, b, x) / a;
+        else return 1.0 - bt * betacf(b, a, 1.0f - x) / b;
+    }
+
+    private double betacf(double a, double b, double x) {
         int m, m2;
         double aa, c, d, del, h, qab, qam, qap;
         qab = a + b;
@@ -40,11 +53,11 @@ public class Betai {
             h *= del;
             if (Math.abs(del - 1.0) < EPS) break;
         }
-        if (m > MAXIT) System.out.println("a or b too big, or MAXIT too small in betacf");
+        if (m > MAXIT) throw new RuntimeException("a or b too big, or MAXIT too small in betacf");
         return h;
     }
 
-    double gammln(float xx) {
+    private double gammln(double xx) {
         double x, y, tmp, ser;
         double cof[] = {
                 76.18009172947146, -86.50532032941677,
@@ -59,16 +72,5 @@ public class Betai {
         for (j = 0; j <= 5; j++) ser += cof[j] / ++y;
         return -tmp + Math.log(2.5066282746310005 * ser / x);
 
-    }
-
-    double betai(float a, float b, float x) {
-        double bt;
-        if (x < 0.0 || x > 1.0) System.out.println("Bad x in routine betai");
-        if (x == 0.0 || x == 1.0) bt = 0.0f;
-        else
-            bt = Math.exp(gammln(a + b) - gammln(a) - gammln(b) + a * Math.log(x) + b * Math.log(1.0 - x));
-        if (x < (a + 1.0) / (a + b + 2.0))
-            return bt * betacf(a, b, x) / a;
-        else return 1.0 - bt * betacf(b, a, 1.0f - x) / b;
     }
 }

@@ -19,9 +19,10 @@
  */
 package org.evosuite.basic;
 
-import com.examples.with.different.packagename.GECCO.Bessj;
-import com.examples.with.different.packagename.GECCO.Expint;
-import com.examples.with.different.packagename.GECCO.Gammq;
+import com.examples.with.different.packagename.GECCO.Betai;
+import com.examples.with.different.packagename.GECCO.Plgndr;
+import com.examples.with.different.packagename.GECCO.Rc;
+import com.examples.with.different.packagename.NextDate;
 import org.evosuite.EvoSuite;
 import org.evosuite.Properties;
 import org.evosuite.SystemTestBase;
@@ -44,7 +45,7 @@ public class NullStringSystemTest extends SystemTestBase {
             EvoSuite evosuite = new EvoSuite();
 
 //        String targetClass = Triangle.class.getCanonicalName();
-//            String targetClass = NextDate.class.getCanonicalName();
+            String targetClass = NextDate.class.getCanonicalName();
 //        String targetClass = NextDateOrigin.class.getCanonicalName();
 //        String targetClass = DayOfWeek.class.getCanonicalName();
 //        String targetClass = Add.class.getCanonicalName();
@@ -56,18 +57,28 @@ public class NullStringSystemTest extends SystemTestBase {
 //        String targetClass = NextDateOriginal.class.getCanonicalName();
 //        String targetClass = NullString.class.getCanonicalName();
 //        String targetClass = Triangle.class.getCanonicalName();
+//        String targetClass = Bessi.class.getCanonicalName();
+//        String targetClass = EI.class.getCanonicalName();
+//            String targetClass = Plgndr.class.getCanonicalName();
+//            String targetClass = Betai.class.getCanonicalName();
+//            String targetClass = Rc.class.getCanonicalName();
 
 //        String targetClass = Bessj.class.getCanonicalName();
-        String targetClass = Expint.class.getCanonicalName();
+//        String targetClass = Expint.class.getCanonicalName();
 //        String targetClass = Gammq.class.getCanonicalName();
 //        String targetClass = EI.class.getCanonicalName();
 //        System.out.println(targetClass);
 
-            Properties.REDUCE_SPACE = true;
-            Properties.PROPOSED_DC = true;
+//            Properties.REDUCE_SPACE = true;
+//            Properties.PROPOSED_DC = true;
+//            Properties.RC_DC = true;
+//            Properties.BETAI_DC = true;
+//            Properties.PLGNDR_DC = true;
+//            Properties.EI_DC = true;
+//            Properties.BESSI_DC = true;
 //            Properties.BESSJ_DC = true;
 //            Properties.GAMMQ_DC = true;
-            Properties.EXPINT_DC = true;
+//            Properties.EXPINT_DC = true;
 //            Properties.NEXT_DATE_DC = true;
 //            Properties.VALID_DATE_DC = true;
 //            Properties.ADD_DATE_DC = true;

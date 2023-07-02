@@ -11,7 +11,7 @@ public class EI {
     private final double FPMIN = 1.0e-30;
     private final double EPS = 6.0e-8;
 
-    double eiMethod(float x) {
+    double ei(double x) {
         int k;
         float fact, prev, sum, term;
         if (x <= 0.0) System.out.println("Bad argument in ei");

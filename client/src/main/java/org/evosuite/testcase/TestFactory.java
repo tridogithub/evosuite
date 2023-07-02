@@ -1257,8 +1257,11 @@ public class TestFactory {
                     (
                             "bessj".equals(methodName)
                                     || "expint".equals(methodName)
+                                    || "plgndr".equals(methodName)
                     )
             ) {
+                intPrimitiveStatement.randomizeArg0();
+            } else if (parameter.getName().equalsIgnoreCase("arg1") && "plgndr".equals(methodName)) {
                 intPrimitiveStatement.randomizeArg0();
             }
             VariableReference ret = test.addStatement(intPrimitiveStatement, position);
@@ -1266,23 +1269,27 @@ public class TestFactory {
             return ret;
         } else if (st instanceof DoublePrimitiveStatement && parameter != null) {
             DoublePrimitiveStatement doublePrimitiveStatement = (DoublePrimitiveStatement) st;
-            if (parameter.getName().equalsIgnoreCase("arg0") &&
-                    (
-                            "bessj".equals(methodName)
-                                    || "expint".equals(methodName)
-                                    || "gammq".equals(methodName)
-                    )
+            if (
+                    "bessj".equals(methodName)
+                            || "expint".equals(methodName)
+                            || "gammq".equals(methodName)
+                            || "bessi".equals(methodName)
+                            || "ei".equals(methodName)
+                            || "plgndr".equals(methodName)
+                            || "betai".equals(methodName)
+                            || "rc".equals(methodName)
             ) {
                 doublePrimitiveStatement.randomizeArg0();
-            } else if (parameter.getName().equalsIgnoreCase("arg1") &&
-                    (
-                            "bessj".equals(methodName)
-                                    || "expint".equals(methodName)
-                                    || "gammq".equals(methodName)
-                    )
-            ) {
-                doublePrimitiveStatement.randomizeArg1();
             }
+//            else if (parameter.getName().equalsIgnoreCase("arg1") &&
+//                    (
+//                            "bessj".equals(methodName)
+//                                    || "expint".equals(methodName)
+//                                    || "gammq".equals(methodName)
+//                    )
+//            ) {
+//                doublePrimitiveStatement.randomizeArg1();
+//            }
         }
 
         VariableReference ret = test.addStatement(st, position);
