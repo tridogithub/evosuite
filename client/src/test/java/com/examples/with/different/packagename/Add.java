@@ -1,9 +1,8 @@
 package com.examples.with.different.packagename;
 
-import org.evosuite.testcarver.wrapper.java.util.Calendar;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**

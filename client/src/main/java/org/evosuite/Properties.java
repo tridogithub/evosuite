@@ -2706,6 +2706,7 @@ public class Properties {
             put(90, 10.39);
         }
     };
+
     public final static Map<Integer, Double> SAKTI_VALID_DATE_DIFFICULTY_COEFFICIENT_MAP = new HashMap<Integer, Double>() {
         {
             put(31, 10.99);
@@ -2831,7 +2832,9 @@ public class Properties {
         }
     };
     public static Map<Integer, Double> SAKTI_DIFFICULTY_EFFICIENT_ARRAY = new HashMap<>();
+    @Parameter(key = "reduce_space", group = "Runtime", description = "")
     public static boolean REDUCE_SPACE = false;
+    @Parameter(key = "sakti_dc", group = "Runtime", description = "")
     public static boolean SAKTI_DC = false;
     @Parameter(key = "proposed_dc", group = "Runtime", description = "")
     public static boolean PROPOSED_DC = false;

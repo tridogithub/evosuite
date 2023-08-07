@@ -545,7 +545,7 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
                 }
             }
             String activeDCNodes = setOfDCNode.stream().map(i -> String.valueOf(i)).collect(Collectors.joining(", "));
-            appendToFile("ActiveDCNode.txt", activeDCNodes);
+//            appendToFile("ActiveDCNode.txt", activeDCNodes);
             for (Integer integer : setOfDCNode) {
                 Branch branch = branchPool.getBranch(integer);
                 if (branch != null) {
@@ -703,7 +703,7 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
                     .collect(Collectors.toList());
             edgeSource.forEach(es -> sb.append(targetNode + " <-- " + es + "\n"));
         });
-        appendToFile("EdgeInfo.txt", sb.toString());
+//        appendToFile("EdgeInfo.txt", sb.toString());
         return nodeAndPathEdges;
     }
 
@@ -758,7 +758,9 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
     }
 
     private void setupBranchDC() {
+        logger.info("Reduce space : " + Properties.REDUCE_SPACE);
         if (Properties.PROPOSED_DC) {
+            logger.info("Proposed DC : " + Properties.PROPOSED_DC);
             if (Properties.NEXT_DATE_DC) {
                 branchDifficultyCoefficient = Properties.NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP;
             } else if (Properties.VALID_DATE_DC) {
@@ -786,6 +788,7 @@ public class BranchCoverageSuiteFitness extends TestSuiteFitnessFunction {
             }
         }
         if (Properties.SAKTI_DC) {
+            logger.info("Sakti DC : " + Properties.SAKTI_DC);
             if (Properties.NEXT_DATE_DC) {
                 branchDifficultyCoefficient = Properties.SAKTI_NEXT_DATE_DIFFICULTY_COEFFICIENT_MAP;
             } else if (Properties.VALID_DATE_DC) {
